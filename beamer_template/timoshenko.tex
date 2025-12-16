@@ -7,6 +7,7 @@
 \usepackage{tikz}  % 用于绘图
 \usepackage{amsmath}  % 更好的数学公式支持
 \usepackage{amssymb}  % 数学符号
+\usepackage{tcolorbox}
 \usetikzlibrary{shapes, arrows, positioning, calc}  % TikZ库
 \usepackage{bm}
 \usepackage{xcolor}
@@ -43,7 +44,7 @@
     
     % 在顶部添加华侨大学校徽
     \begin{center}
-        \includegraphics[width=3cm]{hqu2.png} % 调整校徽大小
+        \includegraphics[width=2.5cm]{hqu2.png} % 调整校徽大小
         \vspace{0.3em}
     \end{center}
     
@@ -79,7 +80,7 @@
     \vfill
 }
 
-\date{2025年12月14日} % Date, can be changed to a custom date
+\date{2025年12月12日} % Date, can be changed to a custom date
 
 %----------------------------------------------------------------------------------------
 %    PRESENTATION SLIDES
@@ -111,7 +112,7 @@
 \hfill
 \begin{minipage}[t]{0.48\linewidth}
     \centering
-    \includegraphics[width=\linewidth]{17.png} \\[0.5em]
+    \includegraphics[width=\linewidth]{31.png} \\[0.5em]
 \end{minipage}
 \end{center}
 
@@ -124,540 +125,236 @@
 \end{frame}
 
 \begin{frame}{研究背景}
-  \vspace{-0.5cm} % 减少顶部空白
 
-\begin{columns}[onlytextwidth,T]
-    % 左侧列：公式和文字
-    \begin{column}{0.55\textwidth}
-        \vspace{0.8cm}
-        
-        % 位移部分
-        \textbf{曲率：}
-        \begin{align*}
-            \kappa=\theta,_{s}  
-        \end{align*}
-        
-        \vspace{1cm}
-        
-        % 应变部分
-        \textbf{应变：}
-        \begin{align*}
-            \gamma &= w,_{s} - \theta + \frac{u}{R} \\
-            \varepsilon &= u,_{s} - \frac{w}{R} \\
-        \end{align*}
-        
-        \vspace{0.2cm}
-
-    \end{column}
-    
-    % 右侧列：图形
-    \begin{column}{0.45\textwidth}
-        \centering
-        \vspace{0.5cm}
-        
-        \begin{center}
-            \includegraphics[width=3.5cm]{1.png} % 调整校徽大小
-            \vspace{0.3em}
-        \end{center}
-
-         \begin{center}
-            \includegraphics[width=3.5cm]{12.png} % 调整校徽大小
-            \vspace{0.3em}
-        \end{center}
-    \end{column}
-\end{columns}
-
-\end{frame}
-
-\begin{frame}{研究背景}
-
-% 主公式区域
-\begin{align*}
-& \text{应力-应变关系：} \\
-& \begin{bmatrix}
-\sigma_{11} \\
-\sigma_{22} \\
-\sigma_{12}
-\end{bmatrix}
-=
-\frac{E}{1-\nu^{2}}
-\begin{bmatrix}
-1 & \nu & 0 \\
-\nu & 1 & 0 \\
-0 & 0 & \frac{(1-2\nu)}{2}
-\end{bmatrix}
-\begin{bmatrix}
-\varepsilon_{11} \\
-\varepsilon_{22} \\
-2\varepsilon_{12}
-\end{bmatrix},
-\qquad
-\begin{bmatrix}
-\sigma_{13} \\
-\sigma_{23}
-\end{bmatrix}
-= 2G
-\begin{bmatrix}
-\varepsilon_{13} \\
-\varepsilon_{13}
-\end{bmatrix} \\[1em]
-& M_{\alpha\beta} = \int_{0}^{h} x_{3}\sigma_{\alpha\beta}dx_{3}
-\quad
-Q_{\alpha} = k\int_{0}^{h}\sigma_{\alpha 3}dx_{3} \\[1em]
-
-\text{弯矩：} 
-\begin{align*}
-     M = EI \frac{d\theta}{ds} \\
-\end{align*}
-\text{剪力：} 
-\begin{align*}
-     Q = \kappa GA \left( \frac{dw}{ds} - \theta \right)
-\end{align*}
-\end{align*}
-\end{frame}
-
-\begin{frame}{研究背景}
-
-% 伽辽金弱形式
-\begin{block}{伽辽金弱形式:}
+\begin{columns}[T,totalwidth=\textwidth]
+\flushleft
+%======================== 左侧 ============================
+\column{0.52\textwidth}
+\textbf{弯矩与应力} \\
 \vspace{0.5em}
-\begin{multline*}
-D^b \int_{\Omega} \delta \bm{\kappa}^T \bm{D} \bm{\kappa} \, d\Omega 
-+ D^s \int_{\Omega} \delta \bm{\gamma}^T \bm{\gamma} \, d\Omega 
-+ \int_{\Gamma^h} \delta \bm{\theta}^T \overline{\bm{M}} \, d\Gamma 
-+ \int_{\Gamma^h} \delta w^T \overline{\bm{Q}} \, d\Gamma 
-- \int_{\Omega} \delta w \, q \, d\Omega = 0
-\end{multline*}
-\end{block}
+$M_b = EI \kappa$ , $ N = EA \varepsilon$ , $Q = kGA \gamma $\\
 
-\vspace{0.8em}
+\textbf{曲率与应变} \\
+\vspace{0.5em}
+$\kappa = \varphi_{,s}$ , $ \varepsilon = u_{,s} - \dfrac{w}{R} $ , $\gamma = w_{,s} + \dfrac{u}{R} - \varphi $\\
 
-% 向量和矩陣定義
-\begin{block}{}
+\vspace{0.5em}
+\textbf{抗剪和抗弯}\\
+\vspace{0.5em}
+$EI = \dfrac{Ebh^3}{12} \propto h^3$ \\[0.25em]
+$ kGA = kG(bh) \propto h$\\[0.25em]
+$EA = E(bh) \propto h$\\
+\textbf{剪切自锁}\\
+\vspace{0.5em}
+$h \to 0$  , $EI \ll (EA , kGA)$ , $(\varepsilon,\gamma) \to 0$
 
-\begin{align*}
-\bm{\kappa} &= 
-\begin{bmatrix}
-\varphi_{1,1} \\[0.5em]
-\varphi_{2,2} \\[0.5em]
-\varphi_{1,2} + \varphi_{2,1}
-\end{bmatrix} &
-\bm{\gamma} &=
-\begin{bmatrix}
-w_{,1} - \varphi_1 \\[0.5em]
-w_{,2} - \varphi_2
-\end{bmatrix} &
-\bm{D} &=
-\begin{bmatrix}
-1 & \nu & 0 \\
-\nu & 1 & 0 \\
-0 & 0 \dfrac{1 - 2\nu}{2}
-\end{bmatrix}
-\end{align*}
-\end{block}
+%======================== 右侧 ============================
+\column{0.48\textwidth}
+\flushleft
+\vspace{-1.3em}
+\textbf{屈曲理论}
 
-\vspace{0.8em}
+\vspace{0.5em}
+\includegraphics[width=7cm,height=6cm,keepaspectratio]{m5.png}
+
+临界载荷 $P_{\text{cr}} = \dfrac{\pi^{2} EI}{(KL)^{2}}$
+
+\end{columns}
 
 \end{frame}
 
 \begin{frame}{研究背景}
+
+\begin{columns}[t]
+\column{0.35\textwidth}
+\centering\textbf{缩减积分}\\
+\raggedright
+\vspace{1em}
+\quad \quad\quad \quad \quad \quad \quad \quad \quad  \textbf{积分}\\
+\quad \quad$EI = \dfrac{Ebh^3}{12}$ \quad \quad{\huge→} \\[1em]
+\quad \quad$kGA = kG(bh)$\\
+\vspace{4.3em}
+
+\quad \quad\quad \quad \quad \quad \quad \quad \quad \textbf{积分}\\
+\quad \quad$EA = E(bh) $ \quad \quad {\huge→} \\
+\vspace{0.2em}
+\begin{figure}[ht] 
+\includegraphics[width=0.07\linewidth]{m7.png} \quad \textbf{积分点}
+\end{figure}
+
+%------------------------
+\column{0.3\textwidth}
+\begin{figure}[ht] 
+\centering % 确保图片在figure内水平居中
+\includegraphics[width=4.5cm, height=4.5cm\linewidth]{m6.png}
+\end{figure}
+\column{0.35\textwidth}
+%------------------------
+\centering\textbf{混合离散}\\
+\vspace{1em}
+\textbf{离散} \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad\\
+{\huge←} \quad $u^h(x) = \sum_{I=1}^{n_u} N_I^u(x) \, d_I $ \quad \quad\\
+\vspace{1em}
+\quad \quad $w^h(x) = \sum_{I=1}^{n_w} M_I^w(x) \, e_I $\\[1em]
+\quad \quad $\psi(x) = \sum_{I=1}^{n_\psi} P_I^\psi(x) \, \psi_I $ \\
+\vspace{1em}
+
+$M_b = EI \kappa$\quad \quad \quad\\[0.5em]
+$N = EA \varepsilon $\quad \quad \quad\\[0.5em]
+\vspace{-1.5em}
+\textbf{离散} \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \\
+{\huge←}\quad $Q = kGA\gamma $\quad \quad \quad \quad
+
+\begin{figure}[ht] 
+\includegraphics[width=0.07\linewidth]{m7.png} \quad \textbf{自由度}
+\end{figure}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{研究背景}
+\textbf{目前存在问题：}
+\vspace{3em}
+\begin{enumerate}
+\item 目前的有限元都只考虑膜应变和剪切应变，忽略了膜应力和剪切应力\\[3em] 
+\item $u,w,Q,N$自由度目前匹配情况尚未清楚，无法 LBB 稳定性建立联系\\[3em]
+\item 目前的有限元方法都基于单元，无法对约束比进行调整。
+\end{enumerate}
+\end{frame}
+
+
+\section{研究方案} 
+
+\begin{frame}{研究方案}
+\begin{center}
+\includegraphics[width=13.2cm]{m13.png} % 調整圖片大小
+\end{center}
+\end{frame}
+
+\begin{frame}{研究方案}
+\textbf{伽辽金弱形式}
+\begin{align*}
+a(\delta \varphi,\varphi) + b_{\varphi}(\delta \varphi,Q) &= f_{\varphi}(\delta \varphi) \\
+\textcolor{blue}{b_{u}(\delta u,\{N,Q\}) &= f_{u}(\delta u)} \\
+\textcolor{blue}{b_{w}(\delta w,\{N,Q\}) &= f_{w}(\delta w)} \\
+\textcolor{red}{b_{N}(\delta N,\varepsilon) &= f_{N}(\delta N)} \\
+\textcolor{red}{b_{Q}(\delta Q,\gamma) &= f_{Q}(\delta Q)}
+\end{align*}
+
+\begin{columns}[onlytextwidth,T]
+\begin{column}{0.4\textwidth}
+    \centering
+    \textbf{\textcolor{blue}{薄膜应力和剪切应力约束}}
+\\[-0.75em]
+\[
+\begin{aligned}
+\textcolor{blue}{\inf_{u_h\in U_h} \sup_{ q_h \in Q_h} \frac{\vert b_{u}(\delta u,\{N,Q\})\vert}{\Vert u_h\Vert_U \Vert  N_h,Q_h \Vert_Q} \ge \beta_{N,Q}}\\[1em]
+\textcolor{blue}{\inf_{w_h\in W_h} \sup_{ q_h \in Q_h} \frac{\vert b_{w}(\delta w,\{N,Q\})\vert}{\Vert w_h\Vert_W \Vert  N_h,Q_h \Vert_Q} \ge \beta_{N,Q}}
+\end{aligned}
+\]
+\end{column}
+
+
+\begin{column}{0.2\textwidth}
     \vspace{2em}
-    % 抗弯刚度和抗剪刚度
-\begin{block}{抗弯刚度和抗剪刚度}
-\vspace{0em}
-\begin{align*}
-D^b = \frac{E h^3}{12(1 - \nu^2)} \quad
-D^s = k G h
-\end{align*}
-\end{block}
+    \centering
+    dim($u$)\\
+    dim($w$)\\
+    dim($N$)\\
+    dim($Q$)\\
+$\Leftrightarrow$
+\end{column}
+\begin{column}{0.4\textwidth}
+    \centering
+    \textbf{\textcolor{red}{薄膜应变和剪切应变约束}}
+    \\[-0.75em]
+\[
+\begin{aligned}
+\textcolor{red}{\inf_{ N_h \in N_h} \sup_{ N_h \in N_h \times \Phi_h}
+\frac{\vert b_{N}(\delta N,\varepsilon) \vert}{\Vert  N_h \Vert_{N\times \Phi} \Vert  \varepsilon \Vert_Q } \ge \beta_{\varepsilon}}\\[1em]
+\textcolor{red}{\inf_{ Q_h \in Q_h} \sup_{ Q_h \in Q_h \times \Phi_h}
+\frac{\vert b_{Q}(\delta Q,\gamma) \vert}{\Vert  Q_h \Vert_{Q\times \Phi} \Vert  \gamma \Vert_Q } \ge \beta_{\gamma}}
+\end{aligned}
+\]
+\end{column}
 
-\vspace{2em}
-% 紅色警示框
-\begin{center}
-\begin{tikzpicture}
-    \node[draw=red, line width=2pt, rounded corners=8pt, fill=red!8, 
-          inner xsep=1.2em, inner ysep=0.8em, text width=0.9\textwidth, align=center] (warning) {
-        \Large\bfseries\textcolor{red}
-        h → 0 時$D^s$抗剪刚度过大导致剪切自由度受到约束，引起自锁
-    };
-    
-    % 锯齿状装饰边框
-    \draw[decorate, decoration={zigzag, segment length=4pt, amplitude=3pt, pre=lineto, pre length=5pt, post=lineto, post length=5pt}, 
-          line width=1.5pt, red] (warning.south west) -- (warning.south east);
-    \draw[decorate, decoration={zigzag, segment length=4pt, amplitude=3pt, pre=lineto, pre length=5pt, post=lineto, post length=5pt}, 
-          line width=1.5pt, red] (warning.north west) -- (warning.north east);
-\end{tikzpicture}
-\end{center}
-% 调整位置
-\vspace{2em}
-\end{frame}
-
-\begin{frame}{研究背景}
-
-         \begin{center}
-            \includegraphics[width=10cm]{20.jpg} % 调整校徽大小
-            \vspace{0.3em}
-        \end{center}
-\begin{block}{屈曲理论}
-\vspace{0em}
-\begin{align*}
-P_{cr} = \frac{\pi^2 E I}{K L^2}
-\end{align*}
-\end{block}
-
-\begin{center}
-    \begin{tikzpicture}[
-        redbox/.style={draw=red, rectangle, minimum width=4.5cm, minimum height=1.2cm, align=center, line width=1.8pt, rounded corners=5pt, font=\large\bfseries, fill=red!5},]
-        
-
-        \node[redbox] (solution) {结构失稳的临界载荷};
-    \end{tikzpicture}
-\end{center}
-\end{frame}
-
-\begin{frame}{研究背景}
-  \vspace{-0.5cm} % 减少顶部空白
-
-\begin{columns}[onlytextwidth,T]
-    % 左侧列：公式和文字
-    \begin{column}{0.4\textwidth}
-        \vspace{0.8cm}
-        \textbf{混合离散分析方法} \\
-        \vspace{0.3cm}
-        % 位移部分
-        \textbf{挠度离散：}
-        \begin{align*}
-            u^h(x) = \sum_{I=1}^{n_u} N^u_{I}(x) d_{i} \\  
-        \end{align*}
-        
-        % 应变部分
-        \textbf{应力离散：}
-        \begin{align*}
-            Q^h(x) = \sum_{I=1}^{n_q} M^q_{I}(x) q_{j} \\
-        \end{align*}
-        
-        \vspace{0.2cm}
-
-    \end{column}
-    
-    % 右侧列：图形
-    \begin{column}{0.6\textwidth}
-        \centering
-        \vspace{1cm}
-        \begin{center}
-            \includegraphics[width=7.6cm]{22.png} % 调整校徽大小
-            \vspace{0.3em}
-        \end{center}
-    \end{column}
-\end{columns}
-
-\end{frame}
-
-\begin{frame}{研究背景}
-
-% 带问号的双向箭头
-\begin{center}
-\begin{tikzpicture}[baseline]
-    % 双向箭头
-    \draw[<->, line width=3.5pt, black] (0.5,0) -- (5.5,0);
-    
-    % 箭头上的问号
-    \node[circle, draw=red, line width=1.2pt, fill=white, inner sep=2pt] at (3,0) {\textcolor{red}{\Huge\bfseries ?}};
-    
-    % 左侧标注
-    \node[anchor=east] at (0,0) {\large\bfseries $\inf_{q \in Q} \sup_{w \in H} \frac{b(w,q)}{\|w\| \|q\|} \geq \beta > 0$};
-    
-    % 右侧标注
-    \node[anchor=west] at (6,0) {\large\bfseries $\dim(w):\dim(q)$};
-
-\end{tikzpicture}
-\end{center}
-
-\vspace{2em}
-
-% 底部结论框
-\begin{center}
-    \begin{tikzpicture}[
-        redbox/.style={draw=red, rectangle, minimum width=10cm, minimum height=1.2cm, align=center, line width=1.8pt, rounded corners=5pt, font=\large\bfseries, fill=red!5},]
-        
-
-        \node[redbox] (solution) {LBB稳定性条件和自由度比例之间的关系不明确};
-    \end{tikzpicture}
-\end{center}
-
-\end{frame}
-
-\begin{frame}{研究背景}
-  \vspace{-0.5cm} % 减少顶部空白
-\begin{columns}[onlytextwidth,T]
-    % 左侧列：公式和文字
-    \begin{column}{0.35\textwidth}
-         \centering
-        \vspace{0.3cm}
-        
-        \begin{center}
-            \includegraphics[width=4cm]{12.png} % 调整校徽大小
-            \vspace{0.3em}
-        \end{center}
-
-         \begin{center}
-            \includegraphics[width=3.5cm]{15.png} % 调整校徽大小
-            \vspace{0.3em}
-        \end{center}
-    \end{column}
-    
-    % 右侧列：图形
-    \begin{column}{0.65\textwidth}
-        \vspace{0.5cm}
-       \begin{tblr}{
-    width = \textwidth,
-    colspec = {X[1, c] X[1, c] X[1, c] X[1, c]},
-    row{1} = {bg=MediumBlue!20, fg=black, font=\bfseries},
-    row{2-Z} = {abovesep=0.5pt, belowsep=0.5pt},
-    row{16} = {font=\normalsize},
-    hlines = {1pt, black},
-    vlines = {},
-}
-
-$\frac{h}{R}$ & $|\frac{u^f}{u^c}-1|$ & $|\frac{v^f}{v^c}-1|$ & $|\frac{\theta^f}{\theta^c}-1|$ \\
-
-1/5    & 0.35\%  & 1.59\%  & 2.09\%  \\
-1/10   & 2.57\%  & 3.24\%  & 3.57\%  \\
-1/20   & 9.08\%  & 9.30\%  & 9.04\%  \\
-1/30   & 17.83\% & 17.82\% & 16.80\% \\
-1/40   & 27.48\% & 27.28\% & 25.54\% \\
-1/50   & 36.90\% & 36.58\% & 34.26\% \\
-1/100  & 69.27\% & 68.83\% & 65.96\% \\
-1/200  & 89.75\% & 89.54\% & 88.06\% \\
-1/300  & 95.13\% & 95.02\% & 94.24\% \\
-1/400  & 97.19\% & 97.13\% & 96.66\% \\
-1/500  & 98.18\% & 98.14\% & 97.83\% \\
-1/1000 & 99.54\% & 99.53\% & 99.45\% \\
-\end{tblr}
-    \end{column}
-\end{columns}
-
-\vspace{0.5cm}
-\end{frame}
-
-\begin{frame}{研究背景}
-      \vspace{-0.5cm} % 减少顶部空白
-\begin{columns}[onlytextwidth,T]
-    % 左侧列：公式和文字
-    \begin{column}{0.35\textwidth}
-         \centering
-        \vspace{0.3cm}
-        
-        \begin{center}
-            \includegraphics[width=4cm]{12.png} % 调整校徽大小
-            \vspace{0.3em}
-        \end{center}
-        
-         \begin{center}
-            \includegraphics[width=3.5cm]{14.png} % 调整校徽大小
-            \vspace{0.3em}
-        \end{center}
-    \end{column}
-    
-    % 右侧列：图形
-    \begin{column}{0.65\textwidth}
-        \vspace{0.3cm}
-        \begin{center}
-            \includegraphics[width=8.5cm]{13.png} % 调整校徽大小
-            \vspace{0.3em}
-        \end{center}
-    \end{column}
 \end{columns}
 \end{frame}
 
-\begin{frame}{研究背景}
 
+\begin{frame}{研究方案}
 \begin{columns}[onlytextwidth,T]
+% 右侧栏：美化流程图
+\begin{column}{0.5\textwidth}
+    \vspace{-0.5em}
+    \textbf{一维有限元}
+        \begin{center}
+\includegraphics[width=6cm]{f8.png} % 調整圖片大小
+\end{center}
+\textbf{无网格径向基函数(RK)形函数的优势}
+\item 便于布置无网格节点 $\Rightarrow$ \textbf{可任意调整约束比}
+\item 全局光滑性 $\Rightarrow$ \textbf{便于数值实现}
+\item 一致性条件 $\Rightarrow$ \textbf{保证计算精度}
+\end{column}
 
 % 左侧栏：问题与解决方案
 \begin{column}{0.5\textwidth}
-\begin{flushleft}  % 左对齐
 \vspace{-0.5em}  % 调整顶部间距
-
-% 问题标题
+\textbf{一维无网格}
 \begin{center}
-{\Large\bfseries 问题：}
+\includegraphics[width=6cm]{f7.png} % 調整圖片大小
 \end{center}
-
-\vspace{0.8em}
-
-% 问题内容
-\begin{itemize}
-    \setlength{\itemsep}{0.8em}  % 增加项目间距
-    \item[\textbf{1.}] 消除自锁的最优自由度比例。
-    \item[\textbf{2.}] 如何任意调整约束自由度比例。
-\end{itemize}
-\end{flushleft}
-\end{column}
-
-% 右侧栏：美化流程图
-\begin{column}{0.5\textwidth}
-\centering
-\vspace{0.5em}
-
-% 美化流程图
-\begin{tikzpicture}[
-    node distance=1.5cm,
-    box/.style={draw, rectangle, minimum width=3.2cm, minimum height=1cm, align=center, line width=1.2pt, rounded corners=4pt, font=\large\bfseries},
-    redbox/.style={draw=red, rectangle, minimum width=4.5cm, minimum height=1.2cm, align=center, line width=1.8pt, rounded corners=5pt, font=\large\bfseries, fill=red!5},
-    plus/.style={draw, circle, minimum size=1.2cm, line width=1.2pt, font=\Large\bfseries},
-    arrow/.style={->, >=stealth, line width=1.2pt}
-]
-
-% 有限元框
-\node[box, fill=blue!10] (fem) at (0,0) {有限元};
-
-% 加号
-\node[plus, fill=gray!10] (plus) at (0,-1.5) {+};
-
-% 无网格框
-\node[box, fill=green!10] (meshfree) at (0,-3) {无网格};
-
-
-% 解决方案框
-\node[redbox] (solution) at (0,-5.5) {内禀最优约束比的\\有限元无网格混合分析方法};
-
-% 连接线
-\draw[arrow, red, line width=1.8pt, shorten >=0.1cm, shorten <=0.1cm] (0,-3.7) -- (solution);
-
-\end{tikzpicture}
 \end{column}
 
 \end{columns}
 
 \end{frame}
 
-\section{研究方案}
+\section{研究內容}
 
-\begin{frame}{研究方案}
-    \vspace{-0.5em}
-% 并排显示两张图片
-\begin{columns}[onlytextwidth,c]
-
-% 左栏：有限元法
-\begin{column}{0.48\textwidth}
-\begin{center}
-% 插入有限元法图片
-\includegraphics[width=\textwidth]{18.png}
-
-% 有限元法描述
-\begin{tikzpicture}
-    \node[draw=blue!50!black, fill=blue!10, thick, rounded corners=5pt, 
-          inner seppt=8pt, text width=0.9\textwidth, align=center] {
-        \Large\bfseries\textcolor{blue!50!black}{有限元法}
-        
-        \vspace{0.3em}
-        
-        \begin{minipage}{0.85\textwidth}
-        \centering
-        \begin{itemize}
-            \setlength{\itemsep}{0.1em}
-            \item 基于网格划分
-            \item 形函数不连续
-            \item 单元边界断裂
-            \item 需网格生成
-        \end{itemize}
-        \end{minipage}
-    };
-\end{tikzpicture}
-\end{center}
-\end{column}
-
-\vspace{0.5em}
-% 右栏：无网格法
-\begin{column}{0.48\textwidth}
-\begin{center}
-% 插入无网格法图片
-\includegraphics[width=\textwidth]{25.png}
-
-
-% 无网格法描述
-\begin{tikzpicture}
-    \node[draw=green!black, fill=green!10, thick, rounded corners=5pt, 
-          inner sep=8pt, text width=0.9\textwidth, align=center] {
-        \Large\bfseries\textcolor{green!50!black}{无网格法}
-        
-        \vspace{0.3em}
-        
-        \begin{minipage}{0.85\textwidth}
-        \centering
-        \begin{itemize}
-            \setlength{\itemsep}{0.1em}
-            \item 无需网格划分
-            \item 形函数全域连续
-            \item 光滑高阶逼近
-            \item 适应性强
-        \end{itemize}
-        \end{minipage}
-    };
-\end{tikzpicture}
-\end{center}
-\end{column}
-\end{columns}
-\end{frame}
-
-\begin{frame}{研究方案}
-\vspace{0.3cm}
-\textbf{有限元无网格混合离散}
-\begin{columns}[onlytextwidth,T]
-\begin{column}{0.55\textwidth}
-        \vspace{0.3cm}
-        \begin{center}
-            \includegraphics[width=8.5cm]{27.png} % 调整校徽大小
-            \vspace{0.3em}
+\begin{frame}{研究内容}
+    \begin{columns}[c]
+        \column{0.3\textwidth}
+ \begin{center}
+            \includegraphics[width=4cm]{f11.jpg} % 調整圖片大小
         \end{center}
-    \end{column}
 
-\begin{column}{0.45\textwidth}
-        \vspace{-0.4cm}
-        \begin{center}
-            \includegraphics[width=4cm]{26.png} % 调整校徽大小
-            \vspace{0.3em}
+        \column{0.3\textwidth}
+         \begin{center}
+            \includegraphics[width=5cm]{f12.jpg} % 調整圖片大小
         \end{center}
-    \end{column}
-\end{columns}
-\end{frame}
 
+        \column{0.3\textwidth}
+        \begin{center}
+            \includegraphics[width=3.2cm]{m12.png} % 調整圖片大小
+        \end{center}
+    \end{columns}
+\end{frame}
 
 \section{进度安排}
 
-\begin{frame}{研究进度安排}
+\begin{frame}{研究进度}
     \vspace{0.2cm} % 减少顶部空白
 % 使用 tabularray 包创建美观的表格
+\centering
 \begin{tblr}{
-    width = \textwidth,
-    colspec = {X[1.02, l] X[2.3, l] X[0.8, c]},
-    row{1} = {bg=MediumBlue!20, fg=black, font=\bfseries},
-    row{2-Z} = {abovesep=5pt, belowsep=5pt},
+    width = 0.95\linewidth,
+    colspec = {X[1,l] X[2.3,l] X[0.8,c]},  %：移除逗號
+    row{1} = {font=\bfseries, c, },  % 添加表頭背景色
+    row{2-Z} = {rowsep=5pt},
     row{6} = {font=\normalsize},
     cell{7}{1} = {c=3}{r},
-    hlines = {1pt, black},
-    vlines = {},
+    hline{1,2,8} = {1pt}, % 顶部、表头下、底部的线
+    % hline{3,4,5,7} = {0.5pt, solid}, % 行之间的细线
+    vlines = {0pt}, % 不显示垂直线
 }
-\textbf{时间} & \textbf{研究内容} & \textbf{进度情况} \\
-
-2023.7-2023.12 & 验证LBB稳定性条件与自由度比例之间的关系 & 
-\raisebox{-0.2ex}{\begin{tikzpicture}[baseline=(a.base)]
-    \node[circle, fill=black, inner sep=3pt] (a) {};
-\end{tikzpicture}} \\
-
-2024.1-2024.2 & 进行Timoshenko曲梁的无网格有限元混合离散分析 & 
-\raisebox{-0.2ex}{\begin{tikzpicture}[baseline=(a.base)]
-    \node[circle, draw=black, thick, inner sep=3pt] (a) {};
-\end{tikzpicture}} \\
-
-2024.3-2024.9 & 曲梁结构免自锁在屈曲分析中的应用 & \\
-
-2024.10-2024.12 & 整理成果并完成论文初稿撰写 & \\
-
-2025.1-2025.3 & 进一步修改完善论文，形成并提交论文终稿 & \\
-
-\scalebox{2}{$\bullet$}已完成 \quad \scalebox{2}{$\circ$} 正在进行 & & \\
+\textbf{時間} & \textbf{研究內容} & \textbf{進度情況} \\
+2025.7-2025.12 & 推导剪切应力和薄膜应力自锁的LBB稳定性条件 & \scalebox{2}{$\circ$} \\
+2026.1-2026.2 & 进行Timoshenko曲梁的混合离散分析 & \\
+2026.3-2026.9 & 曲梁结构免自锁在屈曲分析中的应用 &  \\
+2026.10-2026.12 & 整理成果并完成论文初稿撰写 &\\
+2027.1-2027.3 & 进一步修改完善论文，形成并提交论文终稿 &  \\
+\scalebox{2}{$\bullet$} 已完成 \quad \scalebox{2}{$\circ$} 正在進行 & & \\
 \end{tblr}
 
 % 在表格和图例之间添加弹性空间
