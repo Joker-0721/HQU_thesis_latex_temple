@@ -11,6 +11,7 @@
 
 
 \hypersetup{colorlinks=true,linkcolor=black,citecolor=black}
+
 \begin{document}
 \makecover
 % NOTE: 正式文档请取消下面两行注释
@@ -69,166 +70,56 @@ Latex路径中文件只允许以英文命名
 \end{lstlisting}
 
 
-\chapter{图表设置}
-\subsection*{单张}
-\begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.4]{figures/1.png}
-\caption{\centering{边界点处无网格形函数}}
-\label{CHGraphsettings_fig1_meshfree}
-\end{figure}
-单张图片Latex代码
-\begin{lstlisting}
-\begin{figure}[H]-放置位置
-\centering-居中
-\includegraphics[scale=0.4]{figures/1.png}-大小、图片路径
-\caption{\centering{边界点处无网格形函数}}-图名
-\label{CHGraphsettings_fig1_meshfree}-命名
-\end{figure}
-\end{lstlisting}
-\newpage
-\subsection*{并排}
-\begin{figure}[H]
-    \centering
-    \begin{subcaptiongroup}
-    \includegraphics[width=0.49\textwidth]{figures/1.png}
-    \phantomcaption\label{1}
-    \includegraphics[width=0.49\textwidth]{figures/2.png}
-    \phantomcaption\label{2}
-    \end{subcaptiongroup}
-\caption{\centering{无网格形函数：\subref{1}边界点；\subref{2}中心点}}
-% NOTE:遇到图名过长需要换行的编写：
-% \caption{\centering{标题：\protect\linebreak \subref{xxx} 小标题1；\subref{xx} 小标题2；\subref{xxx}小标题3；\subref{xxx} 小标题4}}
-\label{CHGraphsettings_fig2_meshfree}
-\end{figure}
-并排图片Latex代码
-\begin{lstlisting}
-\begin{figure}[H]
-\centering
-\begin{subcaptiongroup}
-\includegraphics[width=0.49\textwidth]{figure/1.png}
-\phantomcaption\label{1}
-\includegraphics[width=0.49\textwidth]{figure/2.png}
-\phantomcaption\label{2}
-\end{subcaptiongroup}
-\caption{\centering{无网格形函数：\subref{1}边界点；\subref{2}中心点}}
-\end{lstlisting}
-\newpage
-\subsection*{表格式图片}
-\begin{figure}[H]
-    \centering
-    \begin{tabular}{cccc}
-    $\quad$&$p=2$&$p=2$&$p=2$\\
-    边界点&\begin{subcaptiongroup}\raisebox{-0.5\height}{\includegraphics[width=0.3\textwidth]{figures/1.png}}\end{subcaptiongroup}
-    &\begin{subcaptiongroup}\raisebox{-0.5\height}{\includegraphics[width=0.3\textwidth]{figures/1.png}}\end{subcaptiongroup}
-    &\begin{subcaptiongroup}\raisebox{-0.5\height}{\includegraphics[width=0.3\textwidth]{figures/1.png}}\end{subcaptiongroup}\\
-    中心点&\begin{subcaptiongroup}\raisebox{-0.5\height}{\includegraphics[width=0.3\textwidth]{figures/2.png}}\end{subcaptiongroup}
-    &\begin{subcaptiongroup}\raisebox{-0.5\height}{\includegraphics[width=0.3\textwidth]{figures/2.png}}\end{subcaptiongroup}
-    &\begin{subcaptiongroup}\raisebox{-0.5\height}{\includegraphics[width=0.3\textwidth]{figures/2.png}}\end{subcaptiongroup}\\
-    \end{tabular}
-    \caption{\textbf{二维边界点与内部节点无网格形函数图}}\label{CHGraphsettings_fig3_meshfree}
-    \end{figure}
 
-表格式图片Latex代码
-\begin{lstlisting}
-\begin{figure}[H]
-\centering
-\begin{tabular}{cccc}
-$\quad$&$p=2$&$p=2$&$p=2$\\
-边界点&\begin{subcaptiongroup}\raisebox{-0.5\height}{\includegraphics[width=0.3\textwidth]{figure/1.png}}\end{subcaptiongroup}
-&\begin{subcaptiongroup}\raisebox{-0.5\height}{\includegraphics[width=0.3\textwidth]{figure/1.png}}\end{subcaptiongroup}
-&\begin{subcaptiongroup}\raisebox{-0.5\height}{\includegraphics[width=0.3\textwidth]{figure/1.png}}\end{subcaptiongroup}\\
-中心点&\begin{subcaptiongroup}\raisebox{-0.5\height}{\includegraphics[width=0.3\textwidth]{figure/2.png}}\end{subcaptiongroup}
-&\begin{subcaptiongroup}\raisebox{-0.5\height}{\includegraphics[width=0.3\textwidth]{figure/2.png}}\end{subcaptiongroup}
-&\begin{subcaptiongroup}\raisebox{-0.5\height}{\includegraphics[width=0.3\textwidth]{figure/2.png}}\end{subcaptiongroup}\\
-\end{tabular}
-\caption{\textbf{二维边界点与内部节点无网格形函数图}}\label{CHGraphsettings_fig3_meshfree}
-\end{figure}     
-\end{lstlisting}
+\chapter{剪切自锁问题}
 
-\subsection*{三线表}
-\begin{table}[H]
-    \caption{\textbf{三次基函数无网格法分片实验结果}}
-    \centering\label{CHGraphsettings_table_cubic}
-    \begin{tabular}{lcccc}
-       \toprule
-    & \multicolumn{2}{c}{二次分片实验} & \multicolumn{2}{c}{三次分片实验} \\ \cline{2-5}
-       &$L_2$-Error$\quad$&$H_1$-Error&$L_2$-Error$\quad$&$H_1$-Error\\
-       \midrule
-      RKGSI-Penalty&$1.4\times10^{-7}$&$2.1\times10^{-6}$&$2.0\times10^{-7}$&$2.7\times10^{-6}$\\
-      RKGSI-LM&$3.0\times10^{-4}$&$9.8\times10^{-3}$&$4.2\times10^{-4}$&$9.8\times10^{-3}$\\
-      RKGSI-Nitsche&$3.6\times10^{-15}$&$1.0\times10^{-13}$&$4.6\times10^{-15}$&$9.5\times10^{-14}$\\
-      RKGSI-HR&$3.1\times10^{-15}$&$1.0\times10^{-13}$&$3.5\times10^{-15}$&$7.4\times10^{-14}$\\
-       \bottomrule
-    \end{tabular}
-    \end{table}
-三线表Latex代码
-\begin{lstlisting}
-\begin{table}[H]
-\caption{\textbf{三次基函数无网格法分片实验结果}}
-\centering\label{CHGraphsettings_table_cubic}
-\begin{tabular}{lcccc}
-\toprule
-& \multicolumn{2}{c}{二次分片实验} & \multicolumn{2}{c}{三次分片实验} \\ \cline{2-5}
-&$L_2$-Error$\quad$&$H_1$-Error&$L_2$-Error$\quad$&$H_1$-Error\\
-\midrule
-RKGSI-Penalty&$1.4\times10^{-7}$&$2.1\times10^{-6}$&$2.0\times10^{-7}$&$2.7\times10^{-6}$\\
-RKGSI-LM&$3.0\times10^{-4}$&$9.8\times10^{-3}$&$4.2\times10^{-4}$&$9.8\times10^{-3}$\\
-RKGSI-Nitsche&$3.6\times10^{-15}$&$1.0\times10^{-13}$&$4.6\times10^{-15}$&$9.5\times10^{-14}$\\
-RKGSI-HR&$3.1\times10^{-15}$&$1.0\times10^{-13}$&$3.5\times10^{-15}$&$7.4\times10^{-14}$\\
-\bottomrule
-\end{tabular}
-\end{table}    
-\end{lstlisting}
+\section{剪切自锁现象的物理机制}
 
-\chapter{使用Zotero管理参考文献}
-1.下载附件：Better BibTex
-链接：\href{https://zhuanlan.zhihu.com/p/621145900}{Better BibTex安装步骤}
+核心要点：从总势能泛函出发，揭示厚跨比变薄时横向剪切能量项退化为"罚函数"导致结构刚度被高估的数学本质。
 
-2.新建分类建立文件库：references
+% TODO: 补充剪切自锁物理机制的详细推导与论述
 
-3.右击该文件库-选择导出分类-以Better BibTex形式导出条目
+\section{传统有限元免剪切自锁的方案}
 
-4.导出条目至与Latex文件相同路径
+核心要点：概述传统有限元通过数值积分或多变量变分手段，合理放宽虚假剪切约束的三大主流技术演进路线。
 
-5.在主文件(ef:main.tex)中添加：
-\begin{lstlisting}
-\begin{document}
-    .....
-    \bibliography{references}--导出文献的文件名
-    .....
-\end{document}
-\end{lstlisting}
-eg：基于赫林格-赖斯纳原理的变分一致型伽辽金无网格法\cite{Wu2022,wu2023}相较于传统的本质边界条件施加方法能够有效提高计算精度和计算效率。
+\subsection{减缩积分方案}
 
-Latex代码
+核心要点：剖析降低剪切刚度矩阵数值积分阶次、释放奇异值以软化数值刚度的积分阶次效应。
 
-\begin{lstlisting}
-eg：基于赫林格-赖斯纳原理的变分一致型伽辽金无网格法\cite{Wu2022,wu2023}相较于传统的本质边界条件施加方法能够有效提高计算精度和计算效率。
-\end{lstlisting}
+% TODO: 补充减缩积分方案的原理与算例
 
-\chapter{\LaTeX 部分所需包介绍}
+\subsection{应变空间重构方案}
 
+核心要点：说明利用特定几何采样点进行剪切应变重构，从而完全消除寄生剪切力的基本原理。引入独立插值场的多变量变分原理，放宽位移场与剪切约束耦合度的解锁机制。
 
-编写公式-\{amsmath,amsfonts,amssymb,textcomp,ulem\}
+% TODO: 补充应变空间重构方案（ANS、MITC等）的详细论述
 
-绘制表格-\{booktabs,multirow,tabularx,float\}
+\section{LBB 稳定性条件的最优约束比}
 
-书写代码-\{listings\}
+核心要点：归纳上述解锁策略"合理放宽约束"的变分共性，作为构建本文混合离散格式的理论基础。推导混合离散 LBB 不等式，阐明其在完全消除自锁（免锁死）与抑制虚假零能模态（沙漏模态）之间的代数平衡机制。
 
-代码块设置
-\begin{lstlisting}
-\lstset{breaklines,        %自动换行
-        columns=flexible,  %不随便添加空格,只在已经有空格的地方添加空格,
-       }
-\end{lstlisting}
+% TODO: 补充 LBB 条件与约束比的数学推导
 
-设置PDF文档中超链接的颜色
-\begin{lstlisting}
-\hypersetup{colorlinks=true,linkcolor=black,citecolor=black}
-\end{lstlisting}
+\section{小结}
 
+% TODO: 第二章小结
 
+\chapter{自由振动剪切自锁有限元无网格混合离散分析}
+
+\input{chapters/ch3_vibration_derivation}
+\input{examples/square_plate_vibration}
+\section{小结}
+
+% TODO: 第三章小结
+
+\chapter{屈曲分析剪切自锁有限元无网格混合离散分析}
+
+\input{chapters/ch4_buckling_derivation}
+\input{examples/square_plate_buckling}
+\section{小结}
+
+% TODO: 第四章小结
 
 % NOTE 毕业论文致谢部分
 % \include{acknowledgments}
@@ -243,15 +134,15 @@ eg：基于赫林格-赖斯纳原理的变分一致型伽辽金无网格法\cite
 \chapter{参考格式}
 \begin{lstlisting}
 
-\documentclass[engineeringmaster]{hquThesis}-hquThesis是模板文件,包含文本格式,字体设置,文献格式.....
+\documentclass[internationalmaster]{hquThesis}-hquThesis是模板文件,包含文本格式,字体设置,文献格式.....
 \usepackage{amsmath,amsfonts,amssymb,textcomp}-公式所需
 \usepackage{booktabs,multirow,tabularx,float}-表格所需
 \hypersetup{colorlinks=true,linkcolor=black,citecolor=black}-设置超链接格式
 \titleZh{XXX}-中文标题
 \titleEn{XXX}-英文标题
 \id{}-学号
-\authorZh{XXX}-作者姓名
-\supervisorZh{XXX}{XXX}-指导教师+职称
+\authorZh{何祖彦}-作者姓名
+\supervisorZh{吴俊超}{副教授}-指导教师+职称
 \cosupervisorZh{XXX}{XXX}-合作教师+职称
 \practicevisorZh{XXX}{XXX}-实践教师+职称
 \departmentZh{土木工程学院}

@@ -1,0 +1,298 @@
+% 方板屈曲数值算例
+% 包含：CCCC, SSSS, CSCS, FSCS, FSSS, SCSC 六种边界条件
+
+\section{数值算例}
+
+核心要点：针对单轴均匀压缩载荷，系统评估混合离散格式在极薄极限下的临界载荷计算能力。以下给出六种边界条件下、不同厚跨比（v01–v12）的屈曲临界荷载系数对比图。
+
+计算模型如图所示，方板求解域为 $\Omega = [-0.5, 0.5] \times [-0.5, 0.5]$，采用均匀节点离散。四条边分别编号为 1（底边）、2（右边）、3（顶边）、4（左边），通过组合不同的边界约束条件（固支 C、简支 S、自由 F）构成六种典型工况。边界箭头表示各边的位移约束方向。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{plate_model_generated.png}
+    \caption{方板计算模型与边界条件示意图}
+    \label{CH4_plate_model}
+\end{figure}
+
+\textbf{材料与几何参数}：本文数值算例采用无量纲材料参数，具体取值如表所示。方板边长 $a=b=1.0$，板厚 $h=10^{-2}$，厚跨比 $h/a=1/100$，属于薄板范畴。剪切修正系数取 Mindlin 板理论常用值 $\kappa=5/6$。
+
+\begin{table}[H]
+\centering
+\caption{方板屈曲算例材料与几何参数}
+\label{CH4_params}
+\begin{tabular}{lll}
+\hline
+\textbf{参数} & \textbf{符号} & \textbf{取值} \\
+\hline
+弹性模量 & $E$ & $1.0$ \\
+泊松比 & $\nu$ & $0.3$ \\
+密度 & $\rho$ & $1.0$ \\
+板厚 & $h$ & $10^{-2}$ \\
+板边长 & $a=b$ & $1.0$ \\
+剪切修正系数 & $\kappa$ & $5/6$ \\
+弯曲刚度 & $D^b$ & $\approx 9.16\times10^{-8}$ \\
+剪切刚度 & $D^s$ & $\approx 3.21\times10^{-3}$ \\
+预加应力 & $\sigma_{11},\sigma_{22},\sigma_{12}$ & $1.0,0,0$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{网格离散}：数值算例采用结构化网格离散，四边形单元（Quad4）网格规模为 $25\times25$ 至 $35\times35$，三角形单元（Tri3）网格规模对应约 $392$ 至 $800$ 个单元。典型网格如图所示。
+
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{cc}
+    \includegraphics[width=0.45\textwidth]{meshes/mesh_quad4_st_q_25.png} &
+    \includegraphics[width=0.45\textwidth]{meshes/mesh_tri3_st_t_15.png} \\
+    (a) Quad4 单元 ($25\times25=625$ 单元) & (b) Tri3 单元 ($392$ 单元)
+    \end{tabular}
+    \caption{方板结构化网格离散示意图}
+    \label{CH4_mesh}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{单轴受压方板屈曲临界荷载系数对比（三角形 Tri3 网格，$35\times35$，$t/b=0.01$）}
+\label{CH4_compare_table}
+\begin{tabular}{cccccccc}
+\hline
+边界条件 & 标准解$^{[1]}$ & 文献[Bui] & MF & MF2 & FEM & FEM缩减积分 & FEM三变量 \\
+\hline
+CCCC & 10.0700 & 10.1080 & 10.0568 & 10.1040 & 8.2847 & 8.2847 & 10.0842 \\
+SSSS & 4.0000 & 4.0050 & 3.9921 & 3.9987 & 3.5966 & 3.5966 & 4.0081 \\
+CSCS & 7.6900 & 7.7020 & 7.6975 & 7.6617 & 6.2903 & 6.2903 & 7.7069 \\
+SCSC & 6.7500 & 6.7800 & 6.7292 & 6.7620 & 5.8397 & 5.8397 & 6.7392 \\
+FSCS & 1.7000 & 1.6930 & 1.6497 & 1.6528 & 1.5470 & 1.5470 & 1.6547 \\
+FSSS & 1.4400 & 1.4390 & 1.3993 & 1.4019 & 1.3224 & 1.3224 & 1.4032 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{cc}
+    \includegraphics[width=0.48\textwidth]{convergence/conv_tri3_CCCC.png} &
+    \includegraphics[width=0.48\textwidth]{convergence/conv_tri3_SSSS.png} \\
+    (a) 四边固支 CCCC & (b) 四边简支 SSSS
+    \end{tabular}
+    \caption{三角形（Tri3）网格下各方法屈曲临界荷载系数的对数相对误差收敛曲线}
+    \label{CH4_convergence}
+\end{figure}
+
+
+\subsection{方板边界条件屈曲分析}
+
+核心要点：计算四边固支方板在不同厚跨比下的屈曲载荷系数，展示在极薄极限下完全不锁死的数值优越性。
+
+\begin{figure}[H]
+    \centering
+    模態  1\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CCCC_v01_1x6.png}\\[3mm]
+    模態  2\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CCCC_v02_1x6.png}\\[3mm]
+    模態  3\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CCCC_v03_1x6.png}\\[3mm]
+    模態  4\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CCCC_v04_1x6.png}\\[3mm]
+    模態  5\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CCCC_v05_1x6.png}\\[3mm]
+    模態  6\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CCCC_v06_1x6.png}\\[3mm]
+    \caption{四边固支（CCCC）方板屈曲临界荷载系数对比（v01–v12）（模态1–6）}
+    \label{CH4_buckling_CCCC_a}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    模態  7\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CCCC_v07_1x6.png}\\[3mm]
+    模態  8\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CCCC_v08_1x6.png}\\[3mm]
+    模態  9\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CCCC_v09_1x6.png}\\[3mm]
+    模態 10\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CCCC_v10_1x6.png}\\[3mm]
+    模態 11\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CCCC_v11_1x6.png}\\[3mm]
+    模態 12\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CCCC_v12_1x6.png}\\[3mm]
+    \caption{四边固支（CCCC）方板屈曲临界荷载系数对比（v01–v12）（模态7–12）}
+    \label{CH4_buckling_CCCC_b}
+\end{figure}
+
+核心要点：分析四边简支方板的屈曲模态切换特征，探讨最优约束比的收敛规律。
+
+\begin{figure}[H]
+    \centering
+    模態  1\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SSSS_v01_1x6.png}\\[3mm]
+    模態  2\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SSSS_v02_1x6.png}\\[3mm]
+    模態  3\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SSSS_v03_1x6.png}\\[3mm]
+    模態  4\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SSSS_v04_1x6.png}\\[3mm]
+    模態  5\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SSSS_v05_1x6.png}\\[3mm]
+    模態  6\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SSSS_v06_1x6.png}\\[3mm]
+    \caption{四边简支（SSSS）方板屈曲临界荷载系数对比（v01–v12）（模态1–6）}
+    \label{CH4_buckling_SSSS_a}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    模態  7\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SSSS_v07_1x6.png}\\[3mm]
+    模態  8\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SSSS_v08_1x6.png}\\[3mm]
+    模態  9\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SSSS_v09_1x6.png}\\[3mm]
+    模態 10\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SSSS_v10_1x6.png}\\[3mm]
+    模態 11\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SSSS_v11_1x6.png}\\[3mm]
+    模態 12\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SSSS_v12_1x6.png}\\[3mm]
+    \caption{四边简支（SSSS）方板屈曲临界荷载系数对比（v01–v12）（模态7–12）}
+    \label{CH4_buckling_SSSS_b}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    模態  1\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CSCS_v01_1x6.png}\\[3mm]
+    模態  2\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CSCS_v02_1x6.png}\\[3mm]
+    模態  3\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CSCS_v03_1x6.png}\\[3mm]
+    模態  4\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CSCS_v04_1x6.png}\\[3mm]
+    模態  5\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CSCS_v05_1x6.png}\\[3mm]
+    模態  6\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CSCS_v06_1x6.png}\\[3mm]
+    \caption{固支-简支交替（CSCS）方板屈曲临界荷载系数对比（v01–v12）（模态1–6）}
+    \label{CH4_buckling_CSCS_a}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    模態  7\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CSCS_v07_1x6.png}\\[3mm]
+    模態  8\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CSCS_v08_1x6.png}\\[3mm]
+    模態  9\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CSCS_v09_1x6.png}\\[3mm]
+    模態 10\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CSCS_v10_1x6.png}\\[3mm]
+    模態 11\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CSCS_v11_1x6.png}\\[3mm]
+    模態 12\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/CSCS_v12_1x6.png}\\[3mm]
+    \caption{固支-简支交替（CSCS）方板屈曲临界荷载系数对比（v01–v12）（模态7–12）}
+    \label{CH4_buckling_CSCS_b}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    模態  1\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSCS_v01_1x6.png}\\[3mm]
+    模態  2\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSCS_v02_1x6.png}\\[3mm]
+    模態  3\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSCS_v03_1x6.png}\\[3mm]
+    模態  4\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSCS_v04_1x6.png}\\[3mm]
+    模態  5\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSCS_v05_1x6.png}\\[3mm]
+    模態  6\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSCS_v06_1x6.png}\\[3mm]
+    \caption{自由-简支-固支-简支（FSCS）方板屈曲临界荷载系数对比（v01–v12）（模态1–6）}
+    \label{CH4_buckling_FSCS_a}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    模態  7\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSCS_v07_1x6.png}\\[3mm]
+    模態  8\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSCS_v08_1x6.png}\\[3mm]
+    模態  9\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSCS_v09_1x6.png}\\[3mm]
+    模態 10\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSCS_v10_1x6.png}\\[3mm]
+    模態 11\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSCS_v11_1x6.png}\\[3mm]
+    模態 12\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSCS_v12_1x6.png}\\[3mm]
+    \caption{自由-简支-固支-简支（FSCS）方板屈曲临界荷载系数对比（v01–v12）（模态7–12）}
+    \label{CH4_buckling_FSCS_b}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    模態  1\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSSS_v01_1x6.png}\\[3mm]
+    模態  2\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSSS_v02_1x6.png}\\[3mm]
+    模態  3\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSSS_v03_1x6.png}\\[3mm]
+    模態  4\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSSS_v04_1x6.png}\\[3mm]
+    模態  5\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSSS_v05_1x6.png}\\[3mm]
+    模態  6\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSSS_v06_1x6.png}\\[3mm]
+    \caption{自由-简支-简支-简支（FSSS）方板屈曲临界荷载系数对比（v01–v12）（模态1–6）}
+    \label{CH4_buckling_FSSS_a}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    模態  7\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSSS_v07_1x6.png}\\[3mm]
+    模態  8\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSSS_v08_1x6.png}\\[3mm]
+    模態  9\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSSS_v09_1x6.png}\\[3mm]
+    模態 10\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSSS_v10_1x6.png}\\[3mm]
+    模態 11\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSSS_v11_1x6.png}\\[3mm]
+    模態 12\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/FSSS_v12_1x6.png}\\[3mm]
+    \caption{自由-简支-简支-简支（FSSS）方板屈曲临界荷载系数对比（v01–v12）（模态7–12）}
+    \label{CH4_buckling_FSSS_b}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    模態  1\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SCSC_v01_1x6.png}\\[3mm]
+    模態  2\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SCSC_v02_1x6.png}\\[3mm]
+    模態  3\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SCSC_v03_1x6.png}\\[3mm]
+    模態  4\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SCSC_v04_1x6.png}\\[3mm]
+    模態  5\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SCSC_v05_1x6.png}\\[3mm]
+    模態  6\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SCSC_v06_1x6.png}\\[3mm]
+    \caption{简支-固支交替（SCSC）方板屈曲临界荷载系数对比（v01–v12）（模态1–6）}
+    \label{CH4_buckling_SCSC_a}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    模態  7\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SCSC_v07_1x6.png}\\[3mm]
+    模態  8\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SCSC_v08_1x6.png}\\[3mm]
+    模態  9\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SCSC_v09_1x6.png}\\[3mm]
+    模態 10\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SCSC_v10_1x6.png}\\[3mm]
+    模態 11\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SCSC_v11_1x6.png}\\[3mm]
+    模態 12\\[1mm]
+    \includegraphics[width=\linewidth]{combined/layout_1x6_v9/SCSC_v12_1x6.png}\\[3mm]
+    \caption{简支-固支交替（SCSC）方板屈曲临界荷载系数对比（v01–v12）（模态7–12）}
+    \label{CH4_buckling_SCSC_b}
+\end{figure}
+
