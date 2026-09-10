@@ -14,7 +14,7 @@
 
 \begin{document}
 \makecover
-% NOTE: 正式文档请取消下面两行注释
+
 % \include{decision}
 % \include{declaration}
 
@@ -24,82 +24,72 @@
 }
 
 \mainmatter
-\chapter{前期准备}
-\section{封面关键字设置}
-\section{Git相关}
-\begin{enumerate}
-    \item 通过fork建仓，具体步骤可参考\href{https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository}{这里}。
-    \item 设置 .gitignore 文件(已配置)。
-\item 设置临时文件(.aux、.bbl等)和编译文件(.pdf)位置，具体可参考\href{https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#latex-tools}{LaTeX-Workshop帮助文档}(设置\%TMPDIR\%、\%OUTDIR\%)。
-\end{enumerate}
+\chapter{绪论}
+\section{选题背景及意义}
 
-\section{VS code配置}
-\subsection*{配置Latex}
-\href{https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#latex-tools}{LaTeX-Workshop配置}
-\subsection*{LaTeX workshop: }
+% TODO: 待补充——板结构应用背景、屈曲/振动失效、Mindlin板剪切自锁问题、研究意义
 
-正向搜索(forward research)从代码处定位至PDF文档处：Ctrl+alt+j
+\section{国内外研究历史及现状}
 
-反向搜索(inverse research)从PDF文档准确定位至LaTeX代码处：Ctrl+鼠标左键
+% TODO: 待补充——按方法分类综述（缩减积分、混合元、无网格法、有限元无网格混合离散），每段含方法溯源、核心思想、优缺点
 
-正反向搜索具体教程可参考\href{https://github.com/James-Yu/LaTeX-Workshop/wiki/View#synctex}{这里}。
-\subsection*{Git Graph}
-点击左侧源代码管理插件-点击左上角View Git Graph(git log)-查看修改记录
+\section{本文主要内容}
 
-\subsection*{Todo Tree}
-帮助管理项目中的TODO注释和其他标记，\href{https://blog.csdn.net/m0_37586991/article/details/104239568}{Todo Tree安装步骤}。
-
-\subsection*{Zotero LaTeX}
-Zotero管理参考文献
-\section{文件、label 命名规则}
-Latex路径中文件只允许以英文命名
-
-\subsection*{公式}
-\begin{lstlisting}[language=TeX]
-    \label{CH_name}{formula_name}
-\end{lstlisting}
-
-\subsection*{图}
-\begin{lstlisting}
-    \label{CH_name}{fig_name}
-\end{lstlisting}
-
-\subsection*{表}
-\begin{lstlisting}
-    \label{CH_name}{table_name}
-\end{lstlisting}
-
-
+% TODO: 待补充——(1)(2)(3)列出主要贡献 + 各章内容安排
 
 \chapter{剪切自锁问题}
 
 \section{剪切自锁现象的物理机制}
 
-核心要点：从总势能泛函出发，揭示厚跨比变薄时横向剪切能量项退化为"罚函数"导致结构刚度被高估的数学本质。
-
 % TODO: 补充剪切自锁物理机制的详细推导与论述
 
 \section{传统有限元免剪切自锁的方案}
 
-核心要点：概述传统有限元通过数值积分或多变量变分手段，合理放宽虚假剪切约束的三大主流技术演进路线。
-
 \subsection{减缩积分方案}
-
-核心要点：剖析降低剪切刚度矩阵数值积分阶次、释放奇异值以软化数值刚度的积分阶次效应。
 
 % TODO: 补充减缩积分方案的原理与算例
 
-\subsection{应变空间重构方案}
+\subsection{位移-剪力混合离散方案}
 
-核心要点：说明利用特定几何采样点进行剪切应变重构，从而完全消除寄生剪切力的基本原理。引入独立插值场的多变量变分原理，放宽位移场与剪切约束耦合度的解锁机制。
+% TODO: 补充位移-剪力混合离散方案的详细论述
 
-% TODO: 补充应变空间重构方案（ANS、MITC等）的详细论述
-
-\section{LBB 稳定性条件的最优约束比}
-
-核心要点：归纳上述解锁策略"合理放宽约束"的变分共性，作为构建本文混合离散格式的理论基础。推导混合离散 LBB 不等式，阐明其在完全消除自锁（免锁死）与抑制虚假零能模态（沙漏模态）之间的代数平衡机制。
+\section{最优约束比与无网格增强免自锁方案}
 
 % TODO: 补充 LBB 条件与约束比的数学推导
+
+
+\section{Mindlin 板运动学方程}
+
+考虑 Mindlin 板的三维位移场 $\bar{u}_i(x_1,x_2,x_3)$：
+\begin{equation}
+\begin{cases}
+\bar{u}_\alpha(x_1,x_2,x_3) = u_\alpha(x_1,x_2) - x_3\varphi_\alpha(x_1,x_2), & \alpha = 1,2 \\
+\bar{u}_3(x_1,x_2,x_3) = w(x_1,x_2),
+\end{cases}
+\end{equation}
+其中 $u_\alpha$ 为中面面内位移，$w$ 为横向挠度，$\varphi_\alpha$ 为法线纤维的转角，$i,j=1,2,3$，$\alpha,\beta=1,2$，采用爱因斯坦求和约定。在小变形假设下，线性应变张量为 $\varepsilon_{ij} = \frac{1}{2}(u_{i,j}+u_{j,i})$。
+
+面内应变分量（$\alpha,\beta=1,2$）为
+\begin{equation}
+\varepsilon_{\alpha\beta} = \frac{1}{2}(u_{\alpha,\beta}+u_{\beta,\alpha})
+= \frac{x_3}{2}(\varphi_{\alpha,\beta}+\varphi_{\beta,\alpha})
+\equiv x_3 \kappa_{\alpha\beta},
+\end{equation}
+其中 $\kappa_{\alpha\beta} = \frac{1}{2}(\varphi_{\alpha,\beta}+\varphi_{\beta,\alpha})$ 为中面曲率。横向剪切应变（$\alpha=1,2$）为
+\begin{equation}
+\gamma_\alpha \equiv 2\varepsilon_{\alpha 3} = \bar{u}_{\alpha,3}+\bar{u}_{3,\alpha}
+= \varphi_\alpha + w_{,\alpha}.
+\end{equation}
+
+假设板处于平面应力状态（$\sigma_{33}=0$），材料为各向同性线弹性。面内应力与应变关系为 $\sigma_{\alpha\beta}=C_{\alpha\beta\gamma\delta}\varepsilon_{\gamma\delta}$，四阶弹性张量为：
+\begin{equation}
+C_{\alpha\beta\gamma\delta} = \frac{E}{1-\nu^2}\left[\nu\delta_{\alpha\beta}\delta_{\gamma\delta} + \frac{1-\nu}{2}(\delta_{\alpha\gamma}\delta_{\beta\delta}+\delta_{\alpha\delta}\delta_{\beta\gamma})\right],
+\end{equation}
+其中 $E$ 为杨氏模量，$\nu$ 为泊松比。横向剪应力需引入剪力修正系数 $\kappa$，有
+\begin{equation}
+\sigma_{\alpha 3} = \kappa G \gamma_\alpha, \qquad G = \frac{E}{2(1+\nu)},
+\end{equation}
+$\kappa$ 通常取 $5/6$。
 
 \section{小结}
 
@@ -121,48 +111,14 @@ Latex路径中文件只允许以英文命名
 
 % TODO: 第四章小结
 
-% NOTE 毕业论文致谢部分
+
 % \include{acknowledgments}
 \appendix
 \chapter{附录}
-附录章节前需添加以下下代码
-\begin{lstlisting}
-    \appendix
-\end{lstlisting}
+
+% TODO: 待补充附录内容
 
 
-\chapter{参考格式}
-\begin{lstlisting}
-
-\documentclass[internationalmaster]{hquThesis}-hquThesis是模板文件,包含文本格式,字体设置,文献格式.....
-\usepackage{amsmath,amsfonts,amssymb,textcomp}-公式所需
-\usepackage{booktabs,multirow,tabularx,float}-表格所需
-\hypersetup{colorlinks=true,linkcolor=black,citecolor=black}-设置超链接格式
-\titleZh{XXX}-中文标题
-\titleEn{XXX}-英文标题
-\id{}-学号
-\authorZh{何祖彦}-作者姓名
-\supervisorZh{吴俊超}{副教授}-指导教师+职称
-\cosupervisorZh{XXX}{XXX}-合作教师+职称
-\practicevisorZh{XXX}{XXX}-实践教师+职称
-\departmentZh{土木工程学院}
-\fieldZh{结构体系创新与工程应用}
-\majortype{工程硕士}
-\major{土木水利}
-\coverdate{二〇二四年三月XX日}
--封面设置
-\begin{document}-正文开始
-
-\makecover
-\include{decision}-答辩委员会
-\include{declaration}-独创性说明
-\frontmatter
-\include{abstract}-摘要
-\tableofcontents
-\mainmatter
-\include{Introduction}-正文章节
-\include{XXX}
-\include{XXXX}
 \backmatter-页眉另起设置
 \bibliography{references}-引用参考文献条目(.bib)
 \include{acknowledgments}-致谢
@@ -180,7 +136,7 @@ Latex路径中文件只允许以英文命名
 
 \bibliography{references}
 
-% NOTE 毕业论文个人简历部分
+
 \include{cv}
 \include{ai}
 

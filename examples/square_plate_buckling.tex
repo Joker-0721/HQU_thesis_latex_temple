@@ -3,7 +3,7 @@
 
 \section{数值算例}
 
-核心要点：针对单轴均匀压缩载荷，系统评估混合离散格式在极薄极限下的临界载荷计算能力。以下给出六种边界条件下、不同厚跨比（v01–v12）的屈曲临界荷载系数对比图。
+针对单轴均匀压缩载荷，系统评估混合离散格式在极薄极限下的临界载荷计算能力。以下给出六种边界条件下、不同厚跨比（v01–v12）的屈曲临界荷载系数对比图。
 
 计算模型如图所示，方板求解域为 $\Omega = [-0.5, 0.5] \times [-0.5, 0.5]$，采用均匀节点离散。四条边分别编号为 1（底边）、2（右边）、3（顶边）、4（左边），通过组合不同的边界约束条件（固支 C、简支 S、自由 F）构成六种典型工况。边界箭头表示各边的位移约束方向。
 
@@ -14,7 +14,7 @@
     \label{CH4_plate_model}
 \end{figure}
 
-\textbf{材料与几何参数}：本文数值算例采用无量纲材料参数，具体取值如表所示。方板边长 $a=b=1.0$，板厚 $h=10^{-2}$，厚跨比 $h/a=1/100$，属于薄板范畴。剪切修正系数取 Mindlin 板理论常用值 $\kappa=5/6$。
+本文数值算例采用无量纲材料参数，具体取值如表所示。方板边长 $a=b=1.0$，板厚 $h=10^{-2}$，厚跨比 $h/a=1/100$，属于薄板范畴。剪切修正系数取 Mindlin 板理论常用值 $\kappa=5/6$。
 
 \begin{table}[H]
 \centering
@@ -37,16 +37,31 @@
 \end{tabular}
 \end{table}
 
-\textbf{网格离散}：数值算例采用结构化网格离散，四边形单元（Quad4）网格规模为 $25\times25$ 至 $35\times35$，三角形单元（Tri3）网格规模对应约 $392$ 至 $800$ 个单元。典型网格如图所示。
+屈曲临界荷载系数的验证基准基于 Kirchhoff 薄板理论。由于本算例厚跨比 $h/a=1/100$，属于薄板范畴，Mindlin 理论的计算结果应收敛于 Kirchhoff 理论的解析解或经典参考解。
+
+对于四边简支（SSSS）方板，采用 Navier 双三角级数法可获得精确闭合解。设板沿 $x$ 方向承受单轴均布压力 $N_x$，屈曲控制方程为：
+\begin{equation}
+D\nabla^4 w + N_x \frac{\partial^2 w}{\partial x^2} = 0,
+\end{equation}
+其中弯曲刚度 $D = Eh^3/[12(1-\nu^2)]$。取满足四边简支边界条件（$w=0,\ M_n=0$）的试函数：
+\begin{equation}
+w(x,y) = \sum_{m=1}^{\infty}\sum_{n=1}^{\infty} A_{mn} \sin\frac{m\pi x}{a} \sin\frac{n\pi y}{b},
+\end{equation}
+代入控制方程可得方板最低阶（$m=n=1$）屈曲临界荷载系数：
+\begin{equation}
+k_{\mathrm{SSSS}} = \frac{(m^2+n^2)^2}{m^2} = 4.000.
+\end{equation}
+
+对于四边固支（CCCC）、混合边界（CSCS、SCSC）及含自由边（FSCS、FSSS）的方板，由于边界条件无法用简单三角级数自动满足，不存在精确闭合解，需通过 Levy 单三角级数法或 Rayleigh-Ritz 能量法求解超越方程获得数值参考解。本文采用 Timoshenko 与 Gere[\cite{timoshenko1961}] 及 Bui 等人[\cite{bui2011}] 给出的经典参考值作为验证基准，各边界条件的最低阶屈曲系数汇总于表中。
+
+数值算例采用结构化网格离散，四边形单元（Quad4）网格规模为 $25\times25$ 至 $35\times35$，三角形单元（Tri3）网格规模对应约 $392$ 至 $800$ 个单元。典型网格如图所示。
 
 \begin{figure}[H]
     \centering
-    \begin{tabular}{cc}
-    \includegraphics[width=0.45\textwidth]{meshes/mesh_quad4_st_q_25.png} &
-    \includegraphics[width=0.45\textwidth]{meshes/mesh_tri3_st_t_15.png} \\
-    (a) Quad4 单元 ($25\times25=625$ 单元) & (b) Tri3 单元 ($392$ 单元)
-    \end{tabular}
-    \caption{方板结构化网格离散示意图}
+    \includegraphics[width=0.9\textwidth]{meshes/mesh_quad4_styled.png}
+    \vspace{2mm}
+    \includegraphics[width=0.9\textwidth]{meshes/mesh_tri3_styled.png}
+    \caption{方板问题节点离散示意图}
     \label{CH4_mesh}
 \end{figure}
 
@@ -82,7 +97,7 @@ FSSS & 1.4400 & 1.4390 & 1.3993 & 1.4019 & 1.3224 & 1.3224 & 1.4032 \\
 
 \subsection{方板边界条件屈曲分析}
 
-核心要点：计算四边固支方板在不同厚跨比下的屈曲载荷系数，展示在极薄极限下完全不锁死的数值优越性。
+计算四边固支方板在不同厚跨比下的屈曲载荷系数，展示在极薄极限下完全不锁死的数值优越性。
 
 \begin{figure}[H]
     \centering
@@ -119,7 +134,7 @@ FSSS & 1.4400 & 1.4390 & 1.3993 & 1.4019 & 1.3224 & 1.3224 & 1.4032 \\
     \label{CH4_buckling_CCCC_b}
 \end{figure}
 
-核心要点：分析四边简支方板的屈曲模态切换特征，探讨最优约束比的收敛规律。
+分析四边简支方板的屈曲模态切换特征，探讨最优约束比的收敛规律。
 
 \begin{figure}[H]
     \centering

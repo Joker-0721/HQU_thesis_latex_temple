@@ -1,11 +1,11 @@
 % 第四章：屈曲分析公式推导
 % 包含：混合离散屈曲控制方程、能量方程、弱形式
 
+本章针对 Mindlin 中厚板的屈曲问题，基于第二章建立的运动学方程，推导混合离散格式下的屈曲控制方程与广义特征值问题。首先采用 Green-Lagrange 应变张量推导屈曲问题的虚功方程；其次进行离散化，得到材料刚度矩阵与几何刚度矩阵的各子块表达式；最后讨论混合离散格式的稳定性条件。
+
 \section{混合离散屈曲控制方程与特征值问题}
 
-Mindlin 中厚板屈曲问题研究的是：板在面内压力作用下，当荷载逐渐增大至某一临界值时，原始的平面内平衡状态失去稳定性，板突然发生横向挠度（屈曲分岔）。与强度失效不同，屈曲失效通常发生在应力远低于材料屈服强度时，具有突发性。Mindlin 板理论考虑横向剪切变形，适用于中厚板（$1/100 \leq h/L \leq 1/5$），其核心假设是变形后横截面仍保持平面但不再垂直于中面。
-
-考虑 Mindlin 中厚板的屈曲问题，求解目标为临界荷载系数 $\lambda$ 和屈曲模态，对应的广义特征值问题为：
+考虑 Mindlin 中厚板的屈曲问题。板在面内压力作用下，当荷载增大至临界值时，原始平面内平衡状态失去稳定性，板突然发生横向挠度（屈曲分岔）。与强度失效不同，屈曲失效通常发生在应力远低于材料屈服强度时，具有突发性。求解目标为临界荷载系数 $\lambda$ 和屈曲模态，对应的广义特征值问题为：
 \begin{equation}
 (\mathbf{K} + \lambda \mathbf{K}_G)\boldsymbol{\phi} = \mathbf{0}
 \end{equation}
@@ -16,21 +16,9 @@ Mindlin 中厚板屈曲问题研究的是：板在面内压力作用下，当荷
 (\mathbf{k}_b + \lambda \mathbf{k}_g)\mathbf{b} = \mathbf{0}
 \end{equation}
 
-
-
 \section{屈曲分析能量方程}
 
-
-Mindlin 理论假设：变形前垂直于中面的直线纤维，在变形后仍保持直线，但不一定保持垂直于中面。考虑完整的三维位移场：
-\begin{equation}
-\begin{cases}
-\bar{u}_\alpha(x_1,x_2,x_3) = u_\alpha(x_1,x_2) - x_3\varphi_\alpha(x_1,x_2) \\
-\bar{u}_3(x_1,x_2,x_3) = w(x_1,x_2)
-\end{cases}
-\end{equation}
-其中，$u_\alpha$ 为中面面内位移，$w$ 为横向挠度，$\varphi_\alpha$ 为法线纤维的转角。
-
-屈曲分析需考虑几何非线性，采用完整的 Green-Lagrange 应变张量：
+由第二章建立的 Mindlin 板位移场可知，屈曲分析需考虑几何非线性，采用完整的 Green-Lagrange 应变张量：
 \begin{equation}
 \varepsilon_{ij} = \frac{1}{2}(\bar{u}_{i,j} + \bar{u}_{j,i} + \bar{u}_{k,i}\bar{u}_{k,j})
 \end{equation}
@@ -50,20 +38,20 @@ Mindlin 理论假设：变形前垂直于中面的直线纤维，在变形后仍
 \end{equation}
 上述各应变分量的完整逐项展开过程参见附录 B。
 
-平板的虚功原理表达式为：
+根据虚功原理，板的内虚功等于外虚功：
 \begin{equation}
 \int_{-h/2}^{h/2} \varepsilon_{ij}\sigma_{ij}\, dx_3\, d\Omega = \delta W_{ext}
 \end{equation}
-将应变张量拆分为三个部分的积分：
+将应变张量按面内分量、横向剪切分量和厚度方向分量拆分为三部分积分：
 \begin{equation}
 \int_\Omega\int_{-h/2}^{h/2} \varepsilon_{\alpha\beta}\sigma_{\alpha\beta}\, dx_3 d\Omega + 2\int_\Omega\int_{-h/2}^{h/2} \varepsilon_{\alpha 3}\sigma_{\alpha 3}\, dx_3 d\Omega + \int_\Omega\int_{-h/2}^{h/2} \varepsilon_{33}\sigma_{33}\, dx_3 d\Omega = \delta W_{ext}
 \end{equation}
 
-\textbf{第一项：面内应变项}。将总应力 $\sigma_{\alpha\beta}$ 拆分为预应力度与屈曲增量应力：
+第一项为面内应变项。将总应力 $\sigma_{\alpha\beta}$ 拆分为预应力度与屈曲增量应力：
 \begin{equation}
 \sigma_{\alpha\beta} = \bar{\sigma}_{\alpha\beta} + \sigma_{\alpha\beta}^{inc}
 \end{equation}
-其中，预应力度 $\bar{\sigma}_{\alpha\beta}$ 沿厚度均匀分布（与 $x_3$ 无关）；增量应力 $\sigma_{\alpha\beta}^{inc}$ 随厚度弹性变化。将应变展开式代入并完全展开，得到 8 个相乘项。依据小变形假设和屈曲分岔点的特性：第 1、2 项涉及膜应变，其一阶变分为零；第 6、8 项为增量应力与变形梯度的乘积，属三阶小量舍去；第 3 项因预应力度沿厚度均匀分布与 $x_3$ 无关，$\int x_3 dx_3 = 0$ 恒消去。保留第 4、5、7 项，对厚度积分后定义弯矩合力：
+其中，预应力度 $\bar{\sigma}_{\alpha\beta}$ 沿厚度均匀分布（与 $x_3$ 无关）；增量应力 $\sigma_{\alpha\beta}^{inc}$ 随厚度弹性变化。将应变展开式代入并完全展开，面内应变分量与应力的乘积共含 8 项：(1) 公式(4.4)中薄膜应变部分与预应力度 $\bar{\sigma}_{\alpha\beta}$ 的乘积；(2) 薄膜应变部分与增量应力 $\sigma_{\alpha\beta}^{inc}$ 的乘积；(3) 广义曲率项 $-x_3\kappa_{\alpha\beta}$ 与预应力度的乘积；(4) 广义曲率项与增量应力的乘积；(5) von K\'arm\'an 项 $\frac{1}{2}w_{,\alpha}w_{,\beta}$ 与预应力度的乘积；(6) von K\'arm\'an 项与增量应力的乘积；(7) 高阶旋转项 $x_3^2\eta_{\alpha\beta}$ 与预应力度的乘积；(8) 高阶旋转项与增量应力的乘积。依据小变形假设和屈曲分岔点的特性，第 1、2 项涉及膜应变，其一阶变分为零；第 6、8 项为增量应力与二阶位移梯度的乘积，属三阶小量舍去；第 3 项因预应力度沿厚度均匀分布与 $x_3$ 无关，$\int x_3 dx_3 = 0$ 恒消去。保留第 4、5、7 项，对厚度积分后定义弯矩合力：
 \begin{equation}
 M_{\alpha\beta} = \int_{-h/2}^{h/2} x_3 \sigma_{\alpha\beta}^{inc}\, dx_3
 \end{equation}
@@ -72,7 +60,7 @@ M_{\alpha\beta} = \int_{-h/2}^{h/2} x_3 \sigma_{\alpha\beta}^{inc}\, dx_3
 \int_\Omega\int_{-h/2}^{h/2} \varepsilon_{\alpha\beta}\sigma_{\alpha\beta}\, dx_3 d\Omega = \int_\Omega \kappa_{\alpha\beta}M_{\alpha\beta}\, d\Omega + \int_\Omega w_{,\alpha}(h\bar{\sigma}_{\alpha\beta})w_{,\beta}\, d\Omega + \int_\Omega \varphi_{\gamma,\alpha}\left(\frac{h^3}{12}\bar{\sigma}_{\alpha\beta}\right)\varphi_{\gamma,\beta}\, d\Omega
 \end{equation}
 
-\textbf{第二项：横向剪切项}。对于纯面内加载的板，预屈曲横向剪应力 $\bar{\sigma}_{\alpha 3} = 0$，故 $\sigma_{\alpha 3} = \sigma_{\alpha 3}^{inc}$。由虎克定律，引入剪切修正系数 $\kappa$ 后：
+第二项为横向剪切项。对于纯面内加载的板，预屈曲横向剪应力 $\bar{\sigma}_{\alpha 3} = 0$，故 $\sigma_{\alpha 3} = \sigma_{\alpha 3}^{inc}$。由虎克定律，引入剪切修正系数 $\kappa$ 后：
 \begin{equation}
 \sigma_{\alpha 3}^{inc} = \kappa G(w_{,\alpha} - \varphi_\alpha)
 \end{equation}
@@ -81,7 +69,7 @@ M_{\alpha\beta} = \int_{-h/2}^{h/2} x_3 \sigma_{\alpha\beta}^{inc}\, dx_3
 2\int_\Omega\int_{-h/2}^{h/2} \varepsilon_{\alpha 3}\sigma_{\alpha 3}\, dx_3 d\Omega = \int_\Omega \kappa G h\,(w_{,\alpha} - \varphi_\alpha)(w_{,\alpha} - \varphi_\alpha)\, d\Omega
 \end{equation}
 
-\textbf{第三项}：厚度方向法向应变项，在平面应力假设 $\sigma_{33}=0$ 下贡献为零。
+第三项为厚度方向法向应变项，在平面应力假设 $\sigma_{33}=0$ 下贡献为零。
 
 将三项合并，得到屈曲问题的完整虚功方程：
 \begin{equation}
@@ -90,21 +78,17 @@ M_{\alpha\beta} = \int_{-h/2}^{h/2} x_3 \sigma_{\alpha\beta}^{inc}\, dx_3
 &+ \int_\Omega h\bar{\sigma}_{\alpha\beta} w_{,\alpha}w_{,\beta}\, d\Omega + \int_\Omega \frac{h^3}{12}\bar{\sigma}_{\alpha\beta} \varphi_{\gamma,\alpha}\varphi_{\gamma,\beta}\, d\Omega
 \end{aligned}
 \end{equation}
-其中前两项为弹性内力虚功（弯曲与剪切），后两项为预应力度对应的几何刚度虚功（横向挠度与转角各一项）。当板发生屈曲时，预加压应力在屈曲位移梯度上做负功，等效于降低系统的有效刚度；当几何刚度项的绝对值等于弹性刚度项时，系统总刚度矩阵奇异，达到临界屈曲状态。
-
-
+其中前两项为弹性内力虚功（弯曲与剪切），后两项为预应力度对应的几何刚度虚功。当几何刚度项的绝对值等于弹性刚度项时，系统总刚度矩阵奇异，达到临界屈曲状态。
 
 \section{弱形式}
 
-对屈曲虚功方程各变量取变分并令其为零，将离散场代入后得到离散形式的广义特征值方程。形函数内插为：
+对上述屈曲虚功方程各变量取变分并令其为零，将离散场代入后得到离散形式的广义特征值方程。位移场和转角场的形函数插值为：
 \begin{equation}
 w(\mathbf{x}) = N_I w_I, \qquad \varphi_\alpha(\mathbf{x}) = N_I \varphi_{\alpha I}
 \end{equation}
 对空间坐标求偏导，微分算子直接作用在形函数上：$w_{,\alpha} = N_{I,\alpha}w_I$，$\varphi_{\alpha,\beta} = N_{I,\beta}\varphi_\alpha$。虚位移做同阶离散近似。
 
-\textbf{材料刚度矩阵子块展开}
-
-面外材料刚度矩阵 $k_b$ 由弯曲刚度（Bending）与横向剪切刚度（Shear）共同组成。对应自由度 $[w,\varphi_1,\varphi_2]^T$，展开后的对称矩阵形式如下：
+材料刚度矩阵子块展开如下：面外材料刚度矩阵 $k_b$ 由弯曲刚度（Bending）与横向剪切刚度（Shear）共同组成。对应自由度 $[w,\varphi_1,\varphi_2]^T$，展开后的对称矩阵形式如下：
 \begin{equation}
 k_b = \begin{bmatrix}
 k_{ww} & k_{w\varphi_1} & k_{w\varphi_2} \\
@@ -113,9 +97,7 @@ k_{\varphi_2 w} & k_{\varphi_2\varphi_1} & k_{\varphi_2\varphi_2}
 \end{bmatrix}
 \end{equation}
 
-各个子块的控制微分算子或弱形式积分具体架构为：
-
-\textbf{$k_{ww}$}：
+各子块的积分表达式为：对于 $k_{ww}$，
 \begin{equation}
 k_{ww} = \int \kappa Gh(w_{,\alpha}w_{,\alpha})d\Omega
 \end{equation}
@@ -129,7 +111,7 @@ k_{ww} = w_I\cdot\left[\int \kappa Gh(N_{I,\alpha}N_{J,\alpha})d\Omega\right]\cd
 \boxed{K_{IJ}^{ww} = \int \kappa Gh(N_{I,\alpha}N_{J,\alpha})d\Omega}
 \end{equation}
 
-\textbf{$k_{w\varphi_\gamma}$}：
+对于 $k_{w\varphi_\gamma}$，
 \begin{equation}
 k_{w\varphi_\gamma} = -\int \kappa Gh(w_{,\alpha}\varphi_\alpha)d\Omega
 \end{equation}
@@ -143,7 +125,7 @@ k_{IJ}^{w\varphi_\gamma} = w_I\cdot\left[-\int \kappa Gh(N_{I,\gamma}N_J)d\Omega
 \boxed{k_{IJ}^{w\varphi_\gamma} = -\int \kappa Gh(N_{I,\gamma}N_J)d\Omega}
 \end{equation}
 
-\textbf{$k_{\varphi_\alpha\varphi_\gamma}$}：
+对于 $k_{\varphi_\alpha\varphi_\gamma}$，
 弯矩合力与曲率的关系为 $M_{\alpha\beta}=D_{\alpha\beta\gamma}\kappa_\gamma$，$\kappa_{\alpha\beta}=\frac{1}{2}(\varphi_{\alpha,\beta}+\varphi_{\beta,\alpha})$。
 \begin{equation}
 k_{\alpha\gamma}^{\varphi\varphi} = \int(\phi_{\alpha,\beta}D_{\alpha\beta\gamma\eta}\phi_{\gamma,\eta} + \kappa Gh\phi_\alpha\phi_\alpha)d\Omega
@@ -156,9 +138,7 @@ k_{I\alpha,J\gamma}^{\varphi\varphi} = \phi_\alpha\cdot\left[\int(N_{I,\beta}D_{
 \end{equation}
 （其中 $\kappa$ 为剪切修正系数，通常薄板或中厚板取 $5/6$）
 
-\textbf{几何刚度矩阵子块}
-
-展开后的对称矩阵形式为：
+几何刚度矩阵子块展开如下：展开后的对称矩阵形式为：
 \begin{equation}
 k_g = \begin{bmatrix}
 k_g^{ww} & & \\
@@ -167,7 +147,7 @@ k_g^{ww} & & \\
 \end{bmatrix}
 \end{equation}
 
-\textbf{$k_g^{ww}$}：
+对于 $k_g^{ww}$，
 \begin{equation}
 k_g^{ww} = \int w_{,\alpha}(h\bar{\sigma}_{\alpha\beta})w_{,\beta}d\Omega
 \end{equation}
@@ -181,7 +161,7 @@ k_g^{ww} = w_I\cdot\left[\int h\bar{\sigma}_{\alpha\beta}N_{I,\alpha}N_{J,\beta}
 \boxed{k_{g,IJ}^{ww} = \int h\bar{\sigma}_{\alpha\beta}N_{I,\alpha}N_{J,\beta}d\Omega}
 \end{equation}
 
-\textbf{$k_g^{\varphi_\alpha\varphi_\gamma}$}：
+对于 $k_g^{\varphi_\alpha\varphi_\gamma}$，
 \begin{equation}
 k_{g,\alpha\gamma}^{\varphi\varphi} = \int \varphi_{,\beta}\left(\frac{h^3}{12}\bar{\sigma}_{\beta}\right)\varphi_{,\gamma}d\Omega
 \end{equation}
@@ -195,7 +175,7 @@ k_{g,I\alpha,J\gamma}^{\varphi\varphi} = \phi_\alpha\cdot\left[\int\frac{h^3}{12
 \boxed{k_{g,I\alpha,J\gamma}^{\varphi\varphi} = \int\frac{h^3}{12}\bar{\sigma}_{\beta}N_{I,\beta}N_{J,\gamma}d\Omega}
 \end{equation}
 
-将上述所有子块合併，针对中厚板面外屈曲模式，最终的完整展开广义特征值矩阵方程呈现如下：
+将上述所有子块合并，针对中厚板面外屈曲模式，最终的广义特征值矩阵方程为：
 \begin{equation}
 \begin{pmatrix}
 k_{ww} & k_{w\varphi_1} & k_{w\varphi_2} \\
@@ -212,6 +192,7 @@ k_g^{ww} & & \\
 = \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}
 \end{equation}
 
-\textbf{格式稳定性分析}：屈曲问题中，几何刚度矩阵 $\mathbf{K}_G$ 对应于预压应力状态为半负定。为保证屈曲前系统总刚度矩阵 $(\mathbf{K} + \lambda\mathbf{K}_G)$ 的正定性，混合离散格式需满足 LBB稳定性条件。本文采用的剪切应力场插值阶数经约束比分析验证，可保证 inf-sup 常数有正下界，从而在薄板极限下避免剪切自锁并维持刚度矩阵的正定性。当 $\lambda$ 增大至临界值时，总刚度矩阵首次出现奇异，对应第一阶屈曲模态。
-
+% TODO: 待补充——混合离散格式的LBB稳定性分析
+% 如需补充，应结合第二章的约束比理论，说明本格式的剪切应力场插值阶数满足inf-sup条件
+% 可参考徐洋涛论文第3章的写法：独立成节，含特征值问题推导和约束比数值验证
 

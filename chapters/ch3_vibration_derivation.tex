@@ -1,84 +1,23 @@
 % 第三章：自由振动分析公式推导
 % 包含：混合离散动力学方程、能量方程、弱形式
 
+本章针对 Mindlin 中厚板的自由振动问题，基于第二章建立的运动学方程，推导混合离散格式下的动力学控制方程与广义特征值问题。首先推导板的动能变分与应变能变分，通过哈密顿原理建立自由振动的虚功方程；其次进行离散化，得到材料刚度矩阵与质量矩阵的各子块表达式；最后讨论混合离散格式的稳定性条件。
+
 \section{混合离散动力学方程与特征值问题}
 
-Mindlin 中厚板自由振动问题研究的是：板在无外荷载持续作用下，由初始扰动（如敲击、初位移）引起的周期性往复运动。其核心求解目标是结构的固有频率 $\omega$ 和固有振型——固有频率是结构的固有属性，当外激励频率接近某阶固有频率时会发生共振，振幅急剧增大；固有振型则描述各阶频率对应的变形形态。Mindlin 板理论考虑横向剪切变形和转动惯性，适用于中厚板（$1/100 \leq h/L \leq 1/5$）。
-
-自由振动对应的广义特征值问题为：
+考虑 Mindlin 中厚板的自由振动问题，求解目标为结构的固有频率 $\omega$ 和固有振型。自由振动对应的广义特征值问题为：
 \begin{equation}
 (\mathbf{K} - \omega^2 \mathbf{M})\mathbf{D} = \mathbf{0}
 \end{equation}
 式中，$\mathbf{K}$ 为弹性刚度矩阵，$\mathbf{M}$ 为质量矩阵，$\mathbf{D}$ 为节点自由度向量。
 
-
-
 \section{振动分析能量方程}
 
-
-Mindlin 理论假设：变形前垂直于中面的直线纤维，在变形后仍保持直线，但不一定保持垂直于中面，并在初始位置为 $0$，$u_\alpha^0(x_1,x_2,t)=0$。考虑完整的三维位移场 $\bar{u}_i(x_1,x_2,x_3)$ 如下：
-\begin{equation}
-\begin{cases}
-u_\alpha(x_1,x_2,x_3,t) = x_3 \psi_\alpha(x_1,x_2,t), & \alpha = 1,2 \\
-u_3(x_1,x_2,x_3,t) = w(x_1,x_2,t),
-\end{cases}
-\end{equation}
-其中 $w$ 为横向挠度，$\psi_\alpha$ 为中面法线绕 $x_\beta$ 轴的转角（独立于 $w$ 的梯度）。指标范围：$i,j=1,2,3$，$\alpha,\beta=1,2$，采用爱因斯坦求和约定。
-
-在小变形假设下，线性应变张量定义为
-\begin{equation}
-\epsilon_{ij} = \frac{1}{2}(u_{i,j} + u_{j,i}).
-\end{equation}
-
-\textbf{面内应变}（$\alpha,\beta = 1,2$）：将 $i=\alpha, j=\beta$ 代入得
-\begin{equation}
-\epsilon_{\alpha\beta} = \frac{1}{2}(u_{\alpha,\beta} + u_{\beta,\alpha})
-= \frac{x_3}{2}(\psi_{\alpha,\beta} + \psi_{\beta,\alpha})
-\equiv x_3 \kappa_{\alpha\beta},
-\end{equation}
-其中
-\begin{equation}
-\kappa_{\alpha\beta} = \frac{1}{2}(\psi_{\alpha,\beta} + \psi_{\beta,\alpha})
-\end{equation}
-为中面曲率。
-
-\textbf{横向剪切应变}（$\alpha = 1,2$）：将 $i=\alpha, j=3$ 代入得
-\begin{equation}
-\epsilon_{\alpha 3} = \frac{1}{2}(u_{\alpha,3} + u_{3,\alpha})
-\end{equation}
-工程剪切应变为
-\begin{equation}
-\gamma_\alpha \equiv 2\epsilon_{\alpha 3} = u_{\alpha,3} + u_{3,\alpha}
-= \psi_\alpha + w_{,\alpha}.
-\end{equation}
-此处 $\gamma_\alpha$ 为工程剪切应变，代表法线与中面法线之间的夹角变化。
-
-
-
-假设板处于平面应力状态（$\sigma_{33}=0$），材料为各向同性线弹性。面内应力与应变的关系为：
-\begin{equation}
-\sigma_{\alpha\beta} = C_{\alpha\beta\gamma\delta}\,\varepsilon_{\gamma\delta}
-\end{equation}
-其中四阶弹性张量为：
-\begin{equation}
-C_{\alpha\beta\gamma\delta} = \frac{E}{1-\nu^2}\left[\nu\delta_{\alpha\beta}\delta_{\gamma\delta} + \frac{1-\nu}{2}(\delta_{\alpha\gamma}\delta_{\beta\delta} + \delta_{\alpha\delta}\delta_{\beta\gamma})\right]
-\end{equation}
-式中，$E$ 为杨氏模量，$\nu$ 为泊松比。该式由三维各向同性本构 $\sigma_{ij} = \lambda\varepsilon_{kk}\delta_{ij} + 2\mu\varepsilon_{ij}$ 引入平面应力假设 $\sigma_{33}=0$ 推导而得。
-
-横向剪应力与剪应变的关系引入剪力修正系数 $\kappa$，以补偿横断面上实际非均匀剪切应变分布：
-\begin{equation}
-\sigma_{\alpha 3} = \kappa G \gamma_\alpha
-\end{equation}
-其中 $G = E/[2(1+\nu)]$ 为剪切模量，$\kappa$ 通常取 $5/6$。
-
-
-
-
-板的动能变分为：
+由第二章建立的 Mindlin 板位移场、应变-位移关系及材料本构可知，本章直接在此基础上进行动力分析。首先推导板的动能变分与应变能变分，再通过哈密顿原理建立自由振动的虚功方程。板的动能变分为：
 \begin{equation}
 \delta T = \int_V \rho \ddot{u}_i \delta u_i\, dV
 \end{equation}
-将位移场代入，利用中面位置 $x_3=0$ 的对称性以及密度均匀假设，定义惯性系数：
+将位移场代入，利用中面位置 $x_3=0$ 的对称性以及密度均匀假设，定义惯性系数
 \begin{equation}
 I_0 = \int_{-h/2}^{h/2} \rho\, dx_3 = \rho h, \qquad I_2 = \int_{-h/2}^{h/2} \rho x_3^2\, dx_3 = \frac{\rho h^3}{12}
 \end{equation}
@@ -86,9 +25,6 @@ I_0 = \int_{-h/2}^{h/2} \rho\, dx_3 = \rho h, \qquad I_2 = \int_{-h/2}^{h/2} \rh
 \begin{equation}
 \delta T = \int_\Omega \left(I_0 \ddot{w}\,\delta w + I_2 \ddot{\psi}_\alpha \delta\psi_\alpha\right) d\Omega
 \end{equation}
-
-
-
 
 板的应变能变分为：
 \begin{equation}
@@ -98,55 +34,37 @@ I_0 = \int_{-h/2}^{h/2} \rho\, dx_3 = \rho h, \qquad I_2 = \int_{-h/2}^{h/2} \rh
 \begin{equation}
 \sigma_{ij}\delta\varepsilon_{ij} = \sigma_{\alpha\beta}\delta\varepsilon_{\alpha\beta} + 2\sigma_{\alpha 3}\delta\varepsilon_{\alpha 3}
 \end{equation}
-利用 Mindlin 位移场对应的应变变分 $\delta\varepsilon_{\alpha\beta} = x_3\delta\kappa_{\alpha\beta}$，$\delta\varepsilon_{\alpha 3} = \frac{1}{2}\delta\gamma_\alpha$，代入并对厚度积分，定义弯矩合力与剪力合力：
+利用 Mindlin 位移场对应的应变变分 $\delta\varepsilon_{\alpha\beta} = x_3\delta\kappa_{\alpha\beta}$，$\delta\varepsilon_{\alpha 3} = \frac{1}{2}\delta\gamma_\alpha$，代入并对厚度积分，定义弯矩合力与剪力合力
 \begin{equation}
 M_{\alpha\beta} \equiv \int_{-h/2}^{h/2} x_3 \sigma_{\alpha\beta}\, dx_3 = \frac{h^3}{12} C_{\alpha\beta\gamma\delta}\kappa_{\gamma\delta}, \qquad Q_\alpha \equiv \int_{-h/2}^{h/2} \sigma_{\alpha 3}\, dx_3 = \kappa G h \gamma_\alpha
 \end{equation}
-如此一来，内虚功可紧凑写为：
+由此，内虚功可写为
 \begin{equation}
 \delta U = \int_\Omega \left(M_{\alpha\beta}\delta\kappa_{\alpha\beta} + Q_\alpha \delta\gamma_\alpha\right) d\Omega
 \end{equation}
 
-
-
-
-汉米尔顿原理表明
+根据哈密顿原理，系统在任意时间区间 $[t_1, t_2]$ 内的动能变分与应变能变分满足：
 \begin{equation}
 \int_{t_1}^{t_2} (\delta T - \delta U)\, dt = 0,
 \end{equation}
-于是对任意虚位移 $\delta u_i$，满足
+对任意虚位移 $\delta u_i$，可得弹性动力学的虚功方程：
 \begin{equation}
 \int_V (\sigma_{ij}\delta\varepsilon_{ij} + \rho \ddot{u}_i \delta u_i)\, dV = 0.
 \end{equation}
-板的体积积分可分解为中面积分与厚度积分：$\int_V dV = \int_\Omega \int_{-h/2}^{h/2} dx_3\, d\Omega$，其中 $\Omega$ 为板的中面。
-
-将内虚功与惯性项代入，得到 Mindlin 板自由振动的虚功方程：
+板的体积积分可分解为中面积分与厚度积分：$\int_V dV = \int_\Omega \int_{-h/2}^{h/2} dx_3\, d\Omega$，其中 $\Omega$ 为板的中面。将内虚功与惯性项代入，得到 Mindlin 板自由振动的虚功方程：
 \begin{equation}
 \int_\Omega \left[M_{\alpha\beta}\delta\kappa_{\alpha\beta} + Q_\alpha \delta\gamma_\alpha - I_0 \ddot{w}\,\delta w - I_2 \ddot{\psi}_\alpha \delta \psi_\alpha\right] d\Omega = 0.
 \end{equation}
 
-
-
-
-在薄板极限下（$h/L \to 0$），剪切刚度 $\kappa G h$ 相对于弯曲刚度 $D = Eh^3/[12(1-\nu^2)]$ 的比值为 $Gs/D = 6\kappa(1-\nu)/[(1+\nu)h^2]$，该比值随板厚减小而趋于无穷大。此时剪切应变 $\gamma_\alpha = \psi_\alpha + w_{,\alpha}$ 应被强制约束为零（Kirchhoff 约束）。
-
-然而在有限元离散中，位移自由度 $w$ 和转角自由度 $\psi_\alpha$ 通常采用同阶插值，离散后的剪切应变场无法精确满足零约束条件，导致虚假的剪切应变能被计入总势能，使结构计算刚度偏大、固有频率偏刚，这一现象即为剪切自锁。高阶模态受自锁影响更为严重，因为高阶模态对应的波长较短，剪切变形的贡献更大。
-
-
-
-
-本文采用位移-应力混合有限元格式，通过引入独立的剪切应力场，利用 Hellinger-Reissner 变分原理放松剪切约束。混合泛函中，剪切应力场与位移场独立插值，当剪切应力场的插值阶数满足 LBB稳定性条件时，可在薄板极限下正确恢复 Kirchhoff 约束，从而避免剪切自锁。
-
-
 \section{弱形式}
 
-对振动混合泛函各变量取变分并令其为零，将离散场代入后得到广义特征值方程。形函数内插为：
+对上述虚功方程各变量取变分并令其为零，将离散场代入后得到广义特征值方程。位移场和转角场的形函数插值为：
 \begin{equation}
 w(\mathbf{x}) = N_I w_I, \qquad \varphi_\alpha(\mathbf{x}) = N_I \varphi_{\alpha I}
 \end{equation}
 对空间坐标求偏导，微分算子直接作用在形函数上：$w_{,\alpha} = N_{I,\alpha}w_I$，$\varphi_{\alpha,\beta} = N_{I,\beta}\varphi_\alpha$。虚位移做同阶离散近似。
 
-\textbf{材料刚度矩阵子块}：
+材料刚度矩阵各子块为
 \begin{equation}
 K_{IJ}^{ww} = \int_\Omega \kappa G h\, N_{I,\alpha} N_{J,\alpha}\, d\Omega, \qquad K_{I,J\gamma}^{w\varphi} = -\int_\Omega \kappa G h\, N_{I,\gamma} N_J\, d\Omega
 \end{equation}
@@ -154,7 +72,7 @@ K_{IJ}^{ww} = \int_\Omega \kappa G h\, N_{I,\alpha} N_{J,\alpha}\, d\Omega, \qqu
 K_{I\alpha,J\gamma}^{\varphi\varphi} = \int_\Omega \left(N_{I,\beta} D_{\alpha\beta\gamma\eta} N_{J,\eta} + \kappa G h\, N_I N_J \delta_{\alpha\gamma}\right) d\Omega
 \end{equation}
 
-\textbf{质量矩阵子块}：展开后的对称矩阵形式为
+质量矩阵展开后的对称矩阵形式为
 \begin{equation}
 \mathbf{M} = \begin{bmatrix}
 M^{ww} & \mathbf{0} & \mathbf{0} \\
@@ -193,61 +111,4 @@ M_{I\alpha,J\beta}^{\varphi\varphi} = \int_\Omega I_2 \delta_{\alpha\beta} N_I N
 \end{equation}
 此即 Mindlin 板自由振动的全局离散特征值方程。求解广义特征值问题 $(\mathbf{K} - \omega^2\mathbf{M})\mathbf{D} = \mathbf{0}$，可得到自然频率 $\omega$ 和对应模态。
 
-\textbf{格式稳定性分析}：振动问题中，质量矩阵 $\mathbf{M}$ 为对称正定。为保证自由振动特征值问题的适定性，混合离散格式需满足 LBB 稳定性条件。本文采用的剪切应力场插值阶数经约束比分析验证，可保证 inf-sup 常数有正下界，从而在薄板极限下避免剪切自锁并维持刚度矩阵的正定性。当板厚趋近于零时，最低阶频率收敛于 Kirchhoff 薄板理论的解析解。
-
-\textbf{Navier 级数解析解（四边简支 SSSS）}：为自动满足四边简支边界条件，Navier 提出将空间分布假设为正弦与余弦组合，并配合简谐振动的时间项 $e^{i\omega t}$：
-\begin{equation}
-w(x,y,t) = W_{mn}\sin(\alpha_m x)\sin(\beta_n y)e^{i\omega t}, \quad
-\psi_x(x,y,t) = X_{mn}\cos(\alpha_m x)\sin(\beta_n y)e^{i\omega t}, \quad
-\psi_y(x,y,t) = Y_{mn}\sin(\alpha_m x)\cos(\beta_n y)e^{i\omega t}
-\end{equation}
-其中 $\alpha_m = m\pi/a$，$\beta_n = n\pi/b$，$W_{mn}, X_{mn}, Y_{mn}$ 为待求的模态振幅常数。
-
-将上述假设代入控制方程并消去基底，可得连续域理论解的广义特征值问题：
-\begin{equation}
-\begin{bmatrix}
-K_{11} & K_{12} & K_{13} \\
-K_{21} & K_{22} & K_{23} \\
-K_{31} & K_{32} & K_{33}
-\end{bmatrix}
-\begin{bmatrix}
-W_{mn} \\
-X_{mn} \\
-Y_{mn}
-\end{bmatrix}
-= \omega^2
-\begin{bmatrix}
-M_{11} & 0 & 0 \\
-0 & M_{22} & 0 \\
-0 & 0 & M_{33}
-\end{bmatrix}
-\begin{bmatrix}
-W_{mn} \\
-X_{mn} \\
-Y_{mn}
-\end{bmatrix}
-\end{equation}
-其中各刚度系数与质量系数为：
-\begin{equation}
-K_{11} = D^s(\alpha_m^2+\beta_n^2), \quad K_{12}=K_{21}=D^s\alpha_m, \quad K_{13}=K_{31}=D^s\beta_n,
-\end{equation}
-\begin{equation}
-K_{22}=D\alpha_m^2+D\frac{1-\nu}{2}\beta_n^2+D^s, \quad K_{23}=K_{32}=D\frac{1+\nu}{2}\alpha_m\beta_n, \quad K_{33}=D\beta_n^2+D\frac{1-\nu}{2}\alpha_m^2+D^s,
-\end{equation}
-\begin{equation}
-M_{11}=\rho h, \qquad M_{22}=M_{33}=\frac{\rho h^3}{12}.
-\end{equation}
-
-利用 Mindlin 板理论在简支条件下的代数解耦特性，通过将转角场组合为综合转角散度，可将 $3\times3$ 系统降阶为 $2\times2$ 的弯曲-剪切耦合系统，进而求得最低阶固有频率的显式公式：
-\begin{equation}
-\omega_1^2 = \frac{B - \sqrt{B^2 - 4AC}}{2A}
-\end{equation}
-其中
-\begin{equation}
-A = \rho h \cdot \frac{\rho h^3}{12}, \qquad B = \rho h D\lambda^2 + D^s\left(\rho h + \frac{\rho h^3}{12}\lambda^2\right), \qquad C = D D^s \lambda^4,
-\end{equation}
-$\lambda^2 = \alpha_m^2 + \beta_n^2$，$D = Eh^3/[12(1-\nu^2)]$ 为弯曲刚度，$D^s = \kappa Eh/[2(1+\nu)]$ 为剪切刚度。取减号对应低频的横向弯曲模态 $\omega_1$，取加号对应高频的厚度剪切模态 $\omega_2$。
-
-
-
-
+格式稳定性方面，振动问题中，质量矩阵 $\mathbf{M}$ 为对称正定。为保证自由振动特征值问题的适定性，混合离散格式需满足 LBB 稳定性条件。本文采用的剪切应力场插值阶数经约束比分析验证，可保证 inf-sup 常数有正下界，从而在薄板极限下避免剪切自锁并维持刚度矩阵的正定性。当板厚趋近于零时，最低阶频率收敛于 Kirchhoff 薄板理论的解析解。
